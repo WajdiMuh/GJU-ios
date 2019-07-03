@@ -18,6 +18,7 @@ class Main: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.hidesBackButton = true;
+        self.navigationItem.title = "Main"
         // Do any additional setup after loading the view.
         profileimage.contentMode = .scaleAspectFill
         let url = URL(string: "https://mygju.gju.edu.jo/faces/student_view/profile/student_profile.xhtml")!

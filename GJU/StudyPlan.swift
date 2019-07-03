@@ -53,13 +53,9 @@ class StudyPlan: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
         return sectionHeaderView
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        do {
-            print(try courses[indexPath.section][indexPath.row].children().array()[1].text())
-        } catch Exception.Error( let message) {
-            print(message)
-        } catch {
-            print("error")
-        }
+            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Coursecontrol") as? Coursecontroller
+            vc?.courseinfo =  courses[indexPath.section][indexPath.row].children()
+            self.navigationController?.pushViewController(vc!, animated: true)
     }
     @IBAction func headerclick(_ sender: Any) {
         let titleofsection:UILabel = (sender as! UIButton).superview?.viewWithTag(100) as! UILabel
@@ -68,6 +64,7 @@ class StudyPlan: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "Study Plan"
         let url = URL(string: "https://mygju.gju.edu.jo/faces/study_plan_gen/view_std_study_plan.xhtml")!
         let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
             if(error == nil){
@@ -105,7 +102,6 @@ class StudyPlan: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
         // Do any additional setup after loading the view.
     }
     
-
     /*
     // MARK: - Navigation
 

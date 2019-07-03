@@ -18,6 +18,7 @@
 		0DA56D1D22CAE151003ACD2A /* StudyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA56D1C22CAE151003ACD2A /* StudyPlan.swift */; };
 		0DA56D1F22CAEA8B003ACD2A /* course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA56D1E22CAEA8B003ACD2A /* course.swift */; };
 		0DA56D2122CAEB29003ACD2A /* titleofcourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA56D2022CAEB29003ACD2A /* titleofcourses.swift */; };
+		0DD0D82B22CC329800207659 /* Coursecontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD0D82A22CC329800207659 /* Coursecontroller.swift */; };
 		C7051317AE08F33214DE717F /* Pods_GJUTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91416A3E11563BB9D35C0EA9 /* Pods_GJUTests.framework */; };
 		E3381F7853B711AB13B3CE67 /* Pods_GJU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF38B2F2BCA5957DA967ABE /* Pods_GJU.framework */; };
 		E7E041974975196EE7D1E10A /* Pods_GJUUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7D164520998CAE4A6906B9E /* Pods_GJUUITests.framework */; };
@@ -58,6 +59,7 @@
 		0DA56D1C22CAE151003ACD2A /* StudyPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPlan.swift; sourceTree = "<group>"; };
 		0DA56D1E22CAEA8B003ACD2A /* course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = course.swift; sourceTree = "<group>"; };
 		0DA56D2022CAEB29003ACD2A /* titleofcourses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = titleofcourses.swift; sourceTree = "<group>"; };
+		0DD0D82A22CC329800207659 /* Coursecontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coursecontroller.swift; sourceTree = "<group>"; };
 		3EF38B2F2BCA5957DA967ABE /* Pods_GJU.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GJU.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4055B6A279B7AFA00B1525A2 /* Pods-GJU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GJU.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GJU/Pods-GJU.debug.xcconfig"; sourceTree = "<group>"; };
 		91416A3E11563BB9D35C0EA9 /* Pods_GJUTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GJUTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -128,6 +130,7 @@
 				0DA56D1C22CAE151003ACD2A /* StudyPlan.swift */,
 				0DA56D2022CAEB29003ACD2A /* titleofcourses.swift */,
 				0DA56D1E22CAEA8B003ACD2A /* course.swift */,
+				0DD0D82A22CC329800207659 /* Coursecontroller.swift */,
 				0D95256722CA3ED700A8585C /* Main.storyboard */,
 				0D95256A22CA3ED900A8585C /* Assets.xcassets */,
 				0D95256C22CA3ED900A8585C /* LaunchScreen.storyboard */,
@@ -387,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0DA56D2122CAEB29003ACD2A /* titleofcourses.swift in Sources */,
+				0DD0D82B22CC329800207659 /* Coursecontroller.swift in Sources */,
 				0D15826D22CAA07B00C7F887 /* Main.swift in Sources */,
 				0D95256622CA3ED700A8585C /* Login.swift in Sources */,
 				0DA56D1F22CAEA8B003ACD2A /* course.swift in Sources */,
