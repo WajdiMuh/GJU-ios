@@ -9,31 +9,52 @@
 import UIKit
 import SwiftSoup
 
-class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate {
     var sections:Elements? = nil
     var sectionhours:[Elements] = []
     var courses: [[Element]] = []
+    var matches = [[Element]]()
+    var matchsection:[Int] = []
+    @IBOutlet weak var searchcv: UISearchBar!
     @IBOutlet weak var table: UICollectionView!
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return courses[section].count ;
+        if(searchcv.text?.count == 0 || searchcv.text == nil){
+            return courses[section].count ;
+        }else{
+            return matches[section].count;
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return sections?.count ?? 0;
+        if(searchcv.text?.count == 0 || searchcv.text == nil){
+            return sections?.count ?? 0;
+        }else{
+            return matches.count;
+        }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "course", for: indexPath) as! course
             //cell.name.text = courses[indexPath.section][indexPath.row].
-            do {
-                cell.name.text = try courses[indexPath.section][indexPath.row].children().array()[1].text()
-                cell.id.text = try courses[indexPath.section][indexPath.row].children().array()[0].text()
-            } catch Exception.Error( let message) {
-                print(message)
-            } catch {
-                print("error")
+            if(searchcv.text?.count == 0 || searchcv.text == nil){
+                do {
+                    cell.name.text = try courses[indexPath.section][indexPath.row].children().array()[1].text()
+                    cell.id.text = try courses[indexPath.section][indexPath.row].children().array()[0].text()
+                } catch Exception.Error( let message) {
+                    print(message)
+                } catch {
+                    print("error")
+                }
+            }else{
+                do {
+                    cell.name.text = try matches[indexPath.section][indexPath.row].children().array()[1].text()
+                    cell.id.text = try matches[indexPath.section][indexPath.row].children().array()[0].text()
+                } catch Exception.Error( let message) {
+                    print(message)
+                } catch {
+                    print("error")
+                }
             }
         return cell;
     }
@@ -48,19 +69,34 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
     {
         let sectionHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "title", for: indexPath) as! titleofcourses
-        do {
-            sectionHeaderView.titlelabel.text = try sections?.array()[indexPath.section].text()
-            sectionHeaderView.sectionbutton.tag = indexPath.section
-        } catch Exception.Error( let message) {
-            print(message)
-        } catch {
-            print("error")
-        }
+          if(searchcv.text?.count == 0 || searchcv.text == nil){
+                do {
+                    sectionHeaderView.titlelabel.text = try sections?.array()[indexPath.section].text()
+                    sectionHeaderView.sectionbutton.tag = indexPath.section
+                } catch Exception.Error( let message) {
+                    print(message)
+                } catch {
+                    print("error")
+                }
+            }else{
+                do {
+                    sectionHeaderView.titlelabel.text = try sections?.array()[matchsection[indexPath.section]].text()
+                    sectionHeaderView.sectionbutton.tag = matchsection[indexPath.section]
+                } catch Exception.Error( let message) {
+                    print(message)
+                } catch {
+                    print("error")
+                }
+            }
         return sectionHeaderView
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Coursecontrol") as? Coursecontroller
-            vc?.courseinfo =  courses[indexPath.section][indexPath.row].children()
+        if(searchcv.text?.count == 0 || searchcv.text == nil){
+            vc?.courseinfo = courses[indexPath.section][indexPath.row].children()
+        }else{
+            vc?.courseinfo = matches[indexPath.section][indexPath.row].children()
+        }
             self.navigationController?.pushViewController(vc!, animated: true)
     }
     @IBAction func headerclick(_ sender: Any) {
@@ -128,7 +164,37 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         task.resume()
         // Do any additional setup after loading the view.
     }
-    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        matches.removeAll()
+        for i in 0...(self.courses.count - 1){
+            var matchesinsamesection:[Element] = []
+            for j in 0...(self.courses[i].count - 1){
+                do {
+                    let name:String = try courses[i][j].child(1).text()
+                    if(name.contains(searchBar.text!)){
+                        matchesinsamesection.append(courses[i][j])
+                    }
+                } catch Exception.Error( let message) {
+                    print(message)
+                } catch {
+                    print("error")
+                }
+                
+            }
+            if(matchesinsamesection.isEmpty == false){
+                matches.append(matchesinsamesection)
+                matchsection.append(i)
+            }
+        }
+        table.reloadData()
+    }
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        searchcv.resignFirstResponder()
+    }
     /*
     // MARK: - Navigation
 
