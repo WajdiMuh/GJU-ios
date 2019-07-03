@@ -14,6 +14,7 @@ class Login: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var user: UITextField!
     @IBOutlet weak var pass: UITextField!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var autologin: UISwitch!
     let session = URLSession.shared
     var hiddenval:String = ""
     var hiddenvalid:Bool = false
@@ -21,11 +22,19 @@ class Login: UIViewController,UITextFieldDelegate {
         super.viewDidLoad()
         self.user.delegate = self
         self.pass.delegate = self
+        autologin.setOn(UserDefaults.standard.bool(forKey: "autologin"), animated: false)
         getHiddenval(finished: {
-            
+            DispatchQueue.main.async { // Make sure you're on the main thread here
+                if(self.autologin.isOn){
+                    self.user.text = UserDefaults.standard.string(forKey: "username")
+                    self.pass.text = UserDefaults.standard.string(forKey: "password")
+                    self.login(self)
+                }
+            }
         })
         // Do any additional setup after loading the view.
     }
+
     func getHiddenval(finished: @escaping () -> Void){
         let url = URL(string: "https://mygju.gju.edu.jo/faces/index.xhtml")!
         let task = session.dataTask(with: url, completionHandler: { data, response, error in
@@ -89,6 +98,13 @@ class Login: UIViewController,UITextFieldDelegate {
                     self.hiddenvalid = true
                     if(String(decoding: responseData!, as: UTF8.self).contains("Welcome   to your account.")){
                         DispatchQueue.main.async { // Make sure you're on the main thread here
+                            if(self.autologin.isOn){
+                                UserDefaults.standard.set(self.user.text!,forKey: "username")
+                                UserDefaults.standard.set(self.pass.text!,forKey: "password")
+                                UserDefaults.standard.set(true, forKey: "autologin")
+                            }else{
+                                UserDefaults.standard.set(false, forKey: "autologin")
+                            }
                             let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Main") as? Main
                             self.navigationController?.pushViewController(vc!, animated: true)
                         }

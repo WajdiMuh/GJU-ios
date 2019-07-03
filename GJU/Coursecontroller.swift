@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftSoup
+import QuartzCore
 class Coursecontroller: UIViewController {
     var courseinfo:Elements? = nil
     @IBOutlet weak var courseid: UILabel!
@@ -21,6 +22,22 @@ class Coursecontroller: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Course"
+        courseid.layer.cornerRadius=8.0
+        courseid.clipsToBounds=true
+        name.layer.cornerRadius=8.0
+        name.clipsToBounds=true
+        pre.layer.cornerRadius=8.0
+        pre.clipsToBounds=true
+        co.layer.cornerRadius=8.0
+        co.clipsToBounds=true
+        pretest.layer.cornerRadius=8.0
+        pretest.clipsToBounds=true
+        chours.layer.cornerRadius=8.0
+        chours.clipsToBounds=true
+        thours.layer.cornerRadius=8.0
+        thours.clipsToBounds=true
+        phours.layer.cornerRadius=8.0
+        phours.clipsToBounds=true
         do {
             courseid.text = try courseinfo?.array()[0].text()
             name.text = try courseinfo?.array()[1].text()

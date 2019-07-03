@@ -10,5 +10,5 @@ import UIKit
 
 class titleofcourses: UICollectionReusableView {
     @IBOutlet weak var titlelabel: UILabel!
-    
+    @IBOutlet weak var sectionbutton: UIButton!
 }

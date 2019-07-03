@@ -9,8 +9,9 @@
 import UIKit
 import SwiftSoup
 
-class StudyPlan: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     var sections:Elements? = nil
+    var sectionhours:[Elements] = []
     var courses: [[Element]] = []
     @IBOutlet weak var table: UICollectionView!
     
@@ -39,12 +40,17 @@ class StudyPlan: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let width = view.frame.size.width
+        return CGSize(width: width, height: 50)
+    }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
     {
         let sectionHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "title", for: indexPath) as! titleofcourses
         do {
             sectionHeaderView.titlelabel.text = try sections?.array()[indexPath.section].text()
-
+            sectionHeaderView.sectionbutton.tag = indexPath.section
         } catch Exception.Error( let message) {
             print(message)
         } catch {
@@ -58,12 +64,23 @@ class StudyPlan: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
             self.navigationController?.pushViewController(vc!, animated: true)
     }
     @IBAction func headerclick(_ sender: Any) {
-        let titleofsection:UILabel = (sender as! UIButton).superview?.viewWithTag(100) as! UILabel
+        let sb:UIButton = (sender as! UIButton)
+        let titleofsection:UILabel = sb.superview?.viewWithTag(100) as! UILabel
         print(titleofsection.text)
+        do {
+            print(try sectionhours[sb.tag].array()[0].text())
+            print(try sectionhours[sb.tag].array()[1].text())
+        } catch Exception.Error( let message) {
+            print(message)
+        } catch {
+            print("error")
+        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let layout = table.collectionViewLayout as? UICollectionViewFlowLayout
+        layout?.sectionHeadersPinToVisibleBounds = true
         self.navigationItem.title = "Study Plan"
         let url = URL(string: "https://mygju.gju.edu.jo/faces/study_plan_gen/view_std_study_plan.xhtml")!
         let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
@@ -71,6 +88,16 @@ class StudyPlan: UIViewController,UICollectionViewDelegate,UICollectionViewDataS
             do {
                 let doc: Document = try SwiftSoup.parse(String(decoding: data!, as: UTF8.self))
                 self.sections = try doc.getElementsByClass("ui-datatable-header ui-widget-header ui-corner-top")
+                let hoursofsection:Elements = try doc.getElementsContainingOwnText("Section Total Credit Hours:")
+                for e in hoursofsection{
+                    let stch:Element = try e.parent()!.nextElementSibling()!.child(0)
+                    let srch:Element = try e.parent()!.parent()!.nextElementSibling()!.child(1).child(0)
+                    let sectionhourselement:Elements = Elements.init([stch,srch])
+                    //sectionhourselement?.add(try e.parent()!.nextElementSibling()!.child(0))
+                    //sectionhourselement?.add(try e.parent()!.parent()!.nextElementSibling()!.child(1).child(0))
+                    self.sectionhours.append(sectionhourselement)
+                }
+                //print(try self.sectionhours?.first()?.parent()?.parent()?.child(1).child(0))
                 let tablesofcourss:Elements = try doc.getElementsByClass("ui-datatable-data ui-widget-content")
                 for i in 0...(self.sections!.count - 1){
                     let coursesforsectiion:Elements = tablesofcourss.array()[i].children()
