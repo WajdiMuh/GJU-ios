@@ -165,6 +165,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         // Do any additional setup after loading the view.
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        matchsection.removeAll()
         matches.removeAll()
         for i in 0...(self.courses.count - 1){
             var matchesinsamesection:[Element] = []

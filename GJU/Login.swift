@@ -22,6 +22,8 @@ class Login: UIViewController,UITextFieldDelegate {
     var hiddenvalid:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        pass.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        pass.rightViewMode = .never
         let gradient = CAGradientLayer()
         gradient.opacity = 0.8
         gradient.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
@@ -96,8 +98,10 @@ class Login: UIViewController,UITextFieldDelegate {
     func loginprocess(){
         let url = URL(string: "https://mygju.gju.edu.jo/faces/index.xhtml")!
         var request = URLRequest(url: url)
-        hspass.isHidden = true
-        self.view.endEditing(true)
+        DispatchQueue.main.async { // Make sure you're on the main thread here
+            self.hspass.isHidden = true
+            self.view.endEditing(true)
+        }
         request.httpMethod = "POST"
         request.setValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36", forHTTPHeaderField: "User-Agent")
         let bodyData = "j_idt20=j_idt20&j_idt20:login_username="+user.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!+"&j_idt20:login_password="+pass.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!+"&j_idt20:j_idt32=j_idt20:j_idt32&j_idt20:j_idt32:j_idt34=&javax.faces.ViewState="+self.hiddenval
@@ -157,6 +161,7 @@ class Login: UIViewController,UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.hspass.isHidden = true
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == user {
