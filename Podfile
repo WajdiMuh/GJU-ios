@@ -8,6 +8,8 @@ target 'GJU' do
   # Pods for GJU
   pod 'SwiftSoup'
   pod 'Toast-Swift'
+  pod 'TextFieldEffects'
+
   target 'GJUTests' do
     inherit! :search_paths
     # Pods for testing

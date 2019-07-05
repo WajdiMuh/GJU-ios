@@ -9,20 +9,38 @@
 import UIKit
 import SwiftSoup
 import Toast_Swift
-
+import TextFieldEffects
 class Login: UIViewController,UITextFieldDelegate {
-    @IBOutlet weak var user: UITextField!
-    @IBOutlet weak var pass: UITextField!
+    @IBOutlet weak var hspass: UIButton!
+    @IBOutlet weak var user: JiroTextField!
+    @IBOutlet weak var pass: JiroTextField!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var autologin: UISwitch!
+    @IBOutlet weak var background: UIImageView!
     let session = URLSession.shared
     var hiddenval:String = ""
     var hiddenvalid:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        let gradient = CAGradientLayer()
+        gradient.opacity = 0.8
+        gradient.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        gradient.colors = [UIColor(red:0.05, green:0.53, blue:0.79, alpha:1).cgColor,UIColor(red:0.97, green:0.66, blue:0.0, alpha:0.5).cgColor]
+        gradient.locations = [0, 1]
+        gradient.startPoint = CGPoint.zero
+        gradient.endPoint = CGPoint(x: 1.15, y: 1.15)
+        background.layer.addSublayer(gradient)
+        autologin.setOn(UserDefaults.standard.bool(forKey: "autologin"), animated: false)
+        if(autologin.isOn){
+            indicator.isHidden = false
+            for v in self.view.subviews{
+                if(v != self.indicator){
+                    v.isHidden = true
+                }
+            }
+        }
         self.user.delegate = self
         self.pass.delegate = self
-        autologin.setOn(UserDefaults.standard.bool(forKey: "autologin"), animated: false)
         getHiddenval(finished: {
             DispatchQueue.main.async { // Make sure you're on the main thread here
                 if(self.autologin.isOn){
@@ -78,7 +96,8 @@ class Login: UIViewController,UITextFieldDelegate {
     func loginprocess(){
         let url = URL(string: "https://mygju.gju.edu.jo/faces/index.xhtml")!
         var request = URLRequest(url: url)
-        
+        hspass.isHidden = true
+        self.view.endEditing(true)
         request.httpMethod = "POST"
         request.setValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36", forHTTPHeaderField: "User-Agent")
         let bodyData = "j_idt20=j_idt20&j_idt20:login_username="+user.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!+"&j_idt20:login_password="+pass.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!+"&j_idt20:j_idt32=j_idt20:j_idt32&j_idt20:j_idt32:j_idt34=&javax.faces.ViewState="+self.hiddenval
@@ -87,14 +106,6 @@ class Login: UIViewController,UITextFieldDelegate {
         let logintask = session.dataTask(with: request, completionHandler: { (responseData: Data?, response: URLResponse?, error: Error?) in
             if(error == nil){
                 do {
-                    DispatchQueue.main.async {
-                        self.indicator.isHidden = true
-                        for v in self.view.subviews{
-                            if(v != self.indicator){
-                                v.isHidden = false
-                            }
-                        }
-                    }
                     self.hiddenvalid = true
                     if(String(decoding: responseData!, as: UTF8.self).contains("Welcome   to your account.")){
                         DispatchQueue.main.async { // Make sure you're on the main thread here
@@ -112,7 +123,7 @@ class Login: UIViewController,UITextFieldDelegate {
                         DispatchQueue.main.async { // Make sure you're on the main thread here
                             self.indicator.isHidden = true
                             for v in self.view.subviews{
-                                if(v != self.indicator){
+                                if(v != self.indicator && v != self.hspass){
                                     v.isHidden = false
                                 }
                             }
@@ -132,7 +143,7 @@ class Login: UIViewController,UITextFieldDelegate {
                 DispatchQueue.main.async { // Make sure you're on the main thread here
                     self.indicator.isHidden = true
                     for v in self.view.subviews{
-                        if(v != self.indicator){
+                        if(v != self.indicator && v != self.hspass){
                             v.isHidden = false
                         }
                     }
@@ -145,7 +156,7 @@ class Login: UIViewController,UITextFieldDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        user.becomeFirstResponder()
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == user {
@@ -156,6 +167,36 @@ class Login: UIViewController,UITextFieldDelegate {
             login(self)
         }
         return true
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        if(textField == pass){
+            hspass.isHidden = false
+        }
+    }
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        if(textField == pass){
+            hspass.isHidden = true
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.indicator.isHidden = true
+        for v in self.view.subviews{
+            if(v != self.indicator){
+                v.isHidden = false
+            }
+        }
+    }
+    
+    @IBAction func hspassclick(_ sender: Any) {
+        pass.isSecureTextEntry.toggle()
+    }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
 }
 

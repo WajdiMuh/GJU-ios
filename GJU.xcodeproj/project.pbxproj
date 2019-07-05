@@ -8,16 +8,21 @@
 
 /* Begin PBXBuildFile section */
 		0D15826D22CAA07B00C7F887 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D15826C22CAA07B00C7F887 /* Main.swift */; };
+		0D8C640822CD827400C65F3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8C640722CD827400C65F3E /* Assets.xcassets */; };
 		0D95256422CA3ED700A8585C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D95256322CA3ED700A8585C /* AppDelegate.swift */; };
 		0D95256622CA3ED700A8585C /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D95256522CA3ED700A8585C /* Login.swift */; };
 		0D95256922CA3ED700A8585C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D95256722CA3ED700A8585C /* Main.storyboard */; };
-		0D95256B22CA3ED900A8585C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D95256A22CA3ED900A8585C /* Assets.xcassets */; };
 		0D95256E22CA3ED900A8585C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D95256C22CA3ED900A8585C /* LaunchScreen.storyboard */; };
 		0D95257922CA3ED900A8585C /* GJUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D95257822CA3ED900A8585C /* GJUTests.swift */; };
 		0D95258422CA3ED900A8585C /* GJUUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D95258322CA3ED900A8585C /* GJUUITests.swift */; };
 		0DA56D1D22CAE151003ACD2A /* StudyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA56D1C22CAE151003ACD2A /* StudyPlan.swift */; };
 		0DA56D1F22CAEA8B003ACD2A /* course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA56D1E22CAEA8B003ACD2A /* course.swift */; };
 		0DA56D2122CAEB29003ACD2A /* titleofcourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA56D2022CAEB29003ACD2A /* titleofcourses.swift */; };
+		0DA8479122CEBC0900CBAF5E /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = 0DA8479022CEBC0900CBAF5E /* eye.png */; };
+		0DA8479322CEC44D00CBAF5E /* SimpleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA8479222CEC44D00CBAF5E /* SimpleButton.swift */; };
+		0DA8479722CEC4DE00CBAF5E /* SimpleButtonStateChangeValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA8479522CEC4DE00CBAF5E /* SimpleButtonStateChangeValue.swift */; };
+		0DA8479922CEC5DB00CBAF5E /* SimpleButtonControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA8479822CEC5DB00CBAF5E /* SimpleButtonControlState.swift */; };
+		0DA8479E22CEC6F600CBAF5E /* gjub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA8479D22CEC6F600CBAF5E /* gjub.swift */; };
 		0DD0D82B22CC329800207659 /* Coursecontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD0D82A22CC329800207659 /* Coursecontroller.swift */; };
 		C7051317AE08F33214DE717F /* Pods_GJUTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91416A3E11563BB9D35C0EA9 /* Pods_GJUTests.framework */; };
 		E3381F7853B711AB13B3CE67 /* Pods_GJU.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF38B2F2BCA5957DA967ABE /* Pods_GJU.framework */; };
@@ -43,11 +48,11 @@
 
 /* Begin PBXFileReference section */
 		0D15826C22CAA07B00C7F887 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		0D8C640722CD827400C65F3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D95256022CA3ED700A8585C /* GJU.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GJU.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D95256322CA3ED700A8585C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0D95256522CA3ED700A8585C /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		0D95256822CA3ED700A8585C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0D95256A22CA3ED900A8585C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D95256D22CA3ED900A8585C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0D95256F22CA3ED900A8585C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0D95257422CA3ED900A8585C /* GJUTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GJUTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +64,11 @@
 		0DA56D1C22CAE151003ACD2A /* StudyPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPlan.swift; sourceTree = "<group>"; };
 		0DA56D1E22CAEA8B003ACD2A /* course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = course.swift; sourceTree = "<group>"; };
 		0DA56D2022CAEB29003ACD2A /* titleofcourses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = titleofcourses.swift; sourceTree = "<group>"; };
+		0DA8479022CEBC0900CBAF5E /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
+		0DA8479222CEC44D00CBAF5E /* SimpleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButton.swift; sourceTree = "<group>"; };
+		0DA8479522CEC4DE00CBAF5E /* SimpleButtonStateChangeValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButtonStateChangeValue.swift; sourceTree = "<group>"; };
+		0DA8479822CEC5DB00CBAF5E /* SimpleButtonControlState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButtonControlState.swift; sourceTree = "<group>"; };
+		0DA8479D22CEC6F600CBAF5E /* gjub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gjub.swift; sourceTree = "<group>"; };
 		0DD0D82A22CC329800207659 /* Coursecontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coursecontroller.swift; sourceTree = "<group>"; };
 		3EF38B2F2BCA5957DA967ABE /* Pods_GJU.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GJU.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4055B6A279B7AFA00B1525A2 /* Pods-GJU.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GJU.debug.xcconfig"; path = "Pods/Target Support Files/Pods-GJU/Pods-GJU.debug.xcconfig"; sourceTree = "<group>"; };
@@ -131,10 +141,13 @@
 				0DA56D2022CAEB29003ACD2A /* titleofcourses.swift */,
 				0DA56D1E22CAEA8B003ACD2A /* course.swift */,
 				0DD0D82A22CC329800207659 /* Coursecontroller.swift */,
+				0DA8479D22CEC6F600CBAF5E /* gjub.swift */,
+				0DA8479022CEBC0900CBAF5E /* eye.png */,
 				0D95256722CA3ED700A8585C /* Main.storyboard */,
-				0D95256A22CA3ED900A8585C /* Assets.xcassets */,
 				0D95256C22CA3ED900A8585C /* LaunchScreen.storyboard */,
 				0D95256F22CA3ED900A8585C /* Info.plist */,
+				0DA8479A22CEC67300CBAF5E /* SimpleButton */,
+				0D8C640722CD827400C65F3E /* Assets.xcassets */,
 			);
 			path = GJU;
 			sourceTree = "<group>";
@@ -155,6 +168,16 @@
 				0D95258522CA3ED900A8585C /* Info.plist */,
 			);
 			path = GJUUITests;
+			sourceTree = "<group>";
+		};
+		0DA8479A22CEC67300CBAF5E /* SimpleButton */ = {
+			isa = PBXGroup;
+			children = (
+				0DA8479522CEC4DE00CBAF5E /* SimpleButtonStateChangeValue.swift */,
+				0DA8479222CEC44D00CBAF5E /* SimpleButton.swift */,
+				0DA8479822CEC5DB00CBAF5E /* SimpleButtonControlState.swift */,
+			);
+			path = SimpleButton;
 			sourceTree = "<group>";
 		};
 		3D5871064B0C00F444C01B3C /* Frameworks */ = {
@@ -289,8 +312,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				0D95256E22CA3ED900A8585C /* LaunchScreen.storyboard in Resources */,
-				0D95256B22CA3ED900A8585C /* Assets.xcassets in Resources */,
+				0D8C640822CD827400C65F3E /* Assets.xcassets in Resources */,
 				0D95256922CA3ED700A8585C /* Main.storyboard in Resources */,
+				0DA8479122CEBC0900CBAF5E /* eye.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,10 +416,14 @@
 				0DA56D2122CAEB29003ACD2A /* titleofcourses.swift in Sources */,
 				0DD0D82B22CC329800207659 /* Coursecontroller.swift in Sources */,
 				0D15826D22CAA07B00C7F887 /* Main.swift in Sources */,
+				0DA8479922CEC5DB00CBAF5E /* SimpleButtonControlState.swift in Sources */,
+				0DA8479322CEC44D00CBAF5E /* SimpleButton.swift in Sources */,
+				0DA8479722CEC4DE00CBAF5E /* SimpleButtonStateChangeValue.swift in Sources */,
 				0D95256622CA3ED700A8585C /* Login.swift in Sources */,
 				0DA56D1F22CAEA8B003ACD2A /* course.swift in Sources */,
 				0DA56D1D22CAE151003ACD2A /* StudyPlan.swift in Sources */,
 				0D95256422CA3ED700A8585C /* AppDelegate.swift in Sources */,
+				0DA8479E22CEC6F600CBAF5E /* gjub.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
