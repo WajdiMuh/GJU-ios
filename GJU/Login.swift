@@ -22,6 +22,8 @@ class Login: UIViewController,UITextFieldDelegate {
     var hiddenvalid:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
         pass.rightView = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
         pass.rightViewMode = .never
         let gradient = CAGradientLayer()

@@ -8,18 +8,23 @@
 
 import UIKit
 import SwiftSoup
-class Main: UIViewController {
+class Main: UIViewController,UIScrollViewDelegate {
     @IBOutlet weak var profileimage: UIImageView!
     @IBOutlet weak var namelabel: UILabel!
     @IBOutlet weak var studentidlabel: UILabel!
     @IBOutlet weak var majorlabel: UILabel!
     @IBOutlet weak var scroll: UIScrollView!
     @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var loopbacground: UIImageView!
+    @IBOutlet weak var backscroll: UIScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        scroll.delegate = self
         self.navigationItem.hidesBackButton = true;
         self.navigationItem.title = "Main"
         // Do any additional setup after loading the view.
+        //loopbacground.backgroundColor = UIColor.init(patternImage: #imageLiteral(resourceName: "loop small"))
+        //self.loopbacground.image = #imageLiteral(resourceName: "loopbg").resizableImage(withCapInsets: .zero,resizingMode: .tile)
         profileimage.contentMode = .scaleAspectFill
         load()
 
@@ -29,8 +34,16 @@ class Main: UIViewController {
         let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "StudyPlan") as? StudyPlan
         self.navigationController?.pushViewController(vc!, animated: true)
     }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let foregroundScrollviewHeight = scroll.contentSize.height - scroll.bounds.height
+        let percentageScroll = scroll.contentOffset.y / foregroundScrollviewHeight
+        let backgroundScrollViewHeight = backscroll.contentSize.height - (backscroll.bounds.height)
+        print(backscroll.contentSize.height)
+        print(backscroll.bounds.height)
+        print(backgroundScrollViewHeight)
+        backscroll.contentOffset = CGPoint(x: 0, y: backgroundScrollViewHeight * percentageScroll)
+    }
     func load(){
-        print("load")
         let url = URL(string: "https://mygju.gju.edu.jo/faces/student_view/profile/student_profile.xhtml")!
         let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
             if(error == nil){
