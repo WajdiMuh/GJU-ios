@@ -18,7 +18,7 @@ class Login: UIViewController,UITextFieldDelegate {
     @IBOutlet weak var autologin: UISwitch!
     @IBOutlet weak var background: UIImageView!
     let session = URLSession.shared
-    var hiddenval:String = ""
+    var hiddenval:[String] = ["","","",""]
     var hiddenvalid:Bool = false
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,10 +64,13 @@ class Login: UIViewController,UITextFieldDelegate {
                 do {
                     let doc: Document = try SwiftSoup.parse(String(decoding: data!, as: UTF8.self))
                     //print(doc)
+                    let forms: Elements = try doc.select("form")
+                    self.hiddenval[0] = forms.first()!.id()
+                    self.hiddenval[1] = try (doc.getElementsByAttributeValue("type", "hidden").array()[1].getAttributes()?.get(key: "name"))!
+                    self.hiddenval[2] = try (doc.getElementsByClass("ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only").first()?.id())!
                     let hidden:Element = try doc.getElementsByAttributeValue("name", "javax.faces.ViewState").first()!
-                    self.hiddenval = (hidden.getAttributes()?.get(key: "value"))!
+                    self.hiddenval[3] = (hidden.getAttributes()?.get(key: "value"))!
                     self.hiddenvalid = true
-                    print("2")
                 } catch Exception.Error( let message) {
                     print(message)
                 } catch {
@@ -106,7 +109,7 @@ class Login: UIViewController,UITextFieldDelegate {
         }
         request.httpMethod = "POST"
         request.setValue("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36", forHTTPHeaderField: "User-Agent")
-        let bodyData = "j_idt20=j_idt20&j_idt20:login_username="+user.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!+"&j_idt20:login_password="+pass.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!+"&j_idt20:j_idt32=j_idt20:j_idt32&j_idt20:j_idt32:j_idt34=&javax.faces.ViewState="+self.hiddenval
+        let bodyData = self.hiddenval[0]+"="+self.hiddenval[0]+"&"+self.hiddenval[0]+":login_username="+user.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!+"&"+self.hiddenval[0]+":login_password="+pass.text!.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!+"&"+self.hiddenval[1]+"="+self.hiddenval[1]+"&"+self.hiddenval[2]+"=&javax.faces.ViewState="+self.hiddenval[3]
         
         request.httpBody = bodyData.data(using: String.Encoding.utf8);
         let logintask = session.dataTask(with: request, completionHandler: { (responseData: Data?, response: URLResponse?, error: Error?) in
@@ -138,7 +141,7 @@ class Login: UIViewController,UITextFieldDelegate {
                         let doc: Document = try SwiftSoup.parse(String(decoding: responseData!, as: UTF8.self))
                         //print(doc)
                         let hidden:Element = try doc.getElementsByAttributeValue("name", "javax.faces.ViewState").first()!
-                        self.hiddenval = (hidden.getAttributes()?.get(key: "value"))!
+                        self.hiddenval[3] = (hidden.getAttributes()?.get(key: "value"))!
                     }
                 } catch Exception.Error( let message) {
                     print(message)
