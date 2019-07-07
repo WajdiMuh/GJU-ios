@@ -175,6 +175,9 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loopbg" translatesAutoresizingMaskIntoConstraints="NO" id="CNo-4Z-mtr">
                                                 <rect key="frame" x="0.0" y="0.0" width="375" height="1333"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="1333" id="apa-e8-XmB"/>
+                                                </constraints>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -246,7 +249,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="160" id="ick-4K-ggW"/>
                                                 </constraints>
-                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jND-1o-nHU">
+                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="jND-1o-nHU">
                                                     <size key="itemSize" width="334" height="40"/>
                                                     <size key="headerReferenceSize" width="50" height="40"/>
                                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -300,6 +303,9 @@
                                                         </imageView>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g5b-na-9g4">
                                                             <rect key="frame" x="0.0" y="0.0" width="355" height="40"/>
+                                                            <connections>
+                                                                <action selector="headerclick:" destination="f9V-3u-TGC" eventType="touchUpInside" id="duy-cT-Qs3"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -384,6 +390,9 @@
                     </view>
                     <connections>
                         <outlet property="backscroll" destination="2Ic-bx-ERq" id="6cy-QW-zKI"/>
+                        <outlet property="bgheight" destination="apa-e8-XmB" id="MpD-iF-lq5"/>
+                        <outlet property="cv" destination="3XB-Q1-pBb" id="PKx-xr-la9"/>
+                        <outlet property="cvheight" destination="ick-4K-ggW" id="7pi-yB-TJc"/>
                         <outlet property="indicator" destination="k4e-OK-yl8" id="if7-Ke-n2o"/>
                         <outlet property="loopbacground" destination="CNo-4Z-mtr" id="hdf-Ut-lQf"/>
                         <outlet property="majorlabel" destination="q05-aI-nlx" id="G5W-S4-yTA"/>

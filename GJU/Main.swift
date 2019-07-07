@@ -8,7 +8,8 @@
 
 import UIKit
 import SwiftSoup
-class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource{
+class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,headercv{
+    
     @IBOutlet weak var profileimage: UIImageView!
     @IBOutlet weak var namelabel: UILabel!
     @IBOutlet weak var studentidlabel: UILabel!
@@ -18,10 +19,15 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     @IBOutlet weak var loopbacground: UIImageView!
     @IBOutlet weak var backscroll: UIScrollView!
     @IBOutlet weak var pbg: UIView!
+    @IBOutlet weak var bgheight: NSLayoutConstraint!
     let tabledata:[[String]] = [["My Information"],["Study Plan","Course Sections","Schedules","Evaluations","Grades","Transcript"],["Account","Tuition Calculation","Fees"],["Registration"]]
     let sections:[String] = ["Profile","Academic Affairs","Financial Affairs","Registration"]
+    var expanded:[Int] = []
+    @IBOutlet weak var cv: UICollectionView!
+    @IBOutlet weak var cvheight: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
+        bgheight.constant = scroll.frame.height * 1.2
         scroll.delegate = self
         self.navigationItem.hidesBackButton = true;
         self.navigationItem.title = "Main"
@@ -44,6 +50,7 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         let foregroundScrollviewHeight = scroll.contentSize.height - scroll.bounds.height
         let percentageScroll = scroll.contentOffset.y / foregroundScrollviewHeight
         let backgroundScrollViewHeight = backscroll.contentSize.height - (backscroll.bounds.height)
+        print(percentageScroll)
         backscroll.contentOffset = CGPoint(x: 0, y: backgroundScrollViewHeight * percentageScroll)
     }
     func load(){
@@ -97,7 +104,11 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     */
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
-        return 0//tabledata[section].count
+        if(expanded.contains(section)){
+            return tabledata[section].count;
+        }else{
+            return 0;
+        }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -123,14 +134,46 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     {
         let sectionHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "mainm", for: indexPath) as! mainsection
         sectionHeaderView.title.text = sections[indexPath.section]
+        sectionHeaderView.title.tag = indexPath.section
+        sectionHeaderView.delegate = self
         return sectionHeaderView
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("selected")
+        if(indexPath.section == 1 && indexPath.row == 0){
+            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "StudyPlan") as? StudyPlan
+            self.navigationController?.pushViewController(vc!, animated: true)
+        }
         
     }
-    
+    func didexpand(sec: Int) {
+        var height:CGFloat = 160.0
+        if(expanded.contains(sec) == false){
+            expanded.append(sec)
+        }else{
+            if let itemToRemoveIndex = expanded.firstIndex(of: sec) {
+                    expanded.remove(at: itemToRemoveIndex)
+            }
+        }
+        for e in expanded{
+            height += CGFloat(tabledata[e].count) * 40.0
+        }
+        self.cvheight.constant = height
+        //self.cv.reloadData()
+        //scroll.setNeedsLayout()
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut,.allowUserInteraction,.preferredFramesPerSecond60], animations: {
+            self.scroll.layoutIfNeeded()
+        }, completion: nil)
+        UIView.transition(with: cv, duration: 0.5, options: [.transitionCrossDissolve,.allowUserInteraction,.beginFromCurrentState,.curveEaseInOut,.preferredFramesPerSecond60], animations: {
+            //Do the data reload here
+            self.cv.reloadData()
+        }, completion: nil)
+        
+        
+    }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        expanded.removeAll()
+        cv.reloadData()
+        cvheight.constant = 160.0
     }
 }
