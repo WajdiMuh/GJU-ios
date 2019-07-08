@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftSoup
-class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,headercv{
+class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,headercv,UICollectionViewDelegateFlowLayout{
     
     @IBOutlet weak var profileimage: UIImageView!
     @IBOutlet weak var namelabel: UILabel!
@@ -48,7 +48,6 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let foregroundScrollviewHeight = scroll.contentSize.height - scroll.bounds.height
         let percentageScroll = scroll.contentOffset.y / foregroundScrollviewHeight
-        print(scroll.contentSize.height)
         var backgroundScrollViewHeight:CGFloat = 5//backscroll.contentSize.height - (backscroll.bounds.height)
         switch Int(scroll.contentSize.height) {
         case 700:
@@ -150,7 +149,6 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
             cell.seperator.backgroundColor = UIColor.white
         }else{
             cell.seperator.backgroundColor = UIColor(red: 0.784, green: 0.784, blue: 0.784, alpha: 1.0)
-
         }
         return cell;
     }
@@ -158,9 +156,7 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let width = view.frame.size.width
-        return CGSize(width: width, height: 40)
+        return CGSize(width: cv.frame.width - 20, height: 40)
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
     {
@@ -228,6 +224,7 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         
         
     }
+    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         expanded.removeAll()
