@@ -166,6 +166,7 @@ class Login: UIViewController,UITextFieldDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.navigationBar.barStyle = .black
         self.hspass.isHidden = true
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -207,6 +208,9 @@ class Login: UIViewController,UITextFieldDelegate {
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
 

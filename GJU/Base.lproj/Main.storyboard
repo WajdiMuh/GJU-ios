@@ -197,7 +197,7 @@
                                     <constraint firstItem="5DM-5M-UaD" firstAttribute="leading" secondItem="2Ic-bx-ERq" secondAttribute="leading" id="edT-9a-ydF"/>
                                 </constraints>
                             </scrollView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WrR-Ej-wfg">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WrR-Ej-wfg">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ezV-NC-aV2">
@@ -270,15 +270,27 @@
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="et0-N2-c99">
+                                                                    <rect key="frame" x="0.0" y="39" width="334" height="1"/>
+                                                                    <color key="backgroundColor" red="0.78431372549019607" green="0.78431372549019607" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="1" id="ntG-Yq-dgP"/>
+                                                                    </constraints>
+                                                                </view>
                                                             </subviews>
                                                         </view>
                                                         <constraints>
+                                                            <constraint firstItem="et0-N2-c99" firstAttribute="width" secondItem="Ewc-JB-E6C" secondAttribute="width" id="LW5-Dc-gDt"/>
+                                                            <constraint firstItem="et0-N2-c99" firstAttribute="leading" secondItem="Ewc-JB-E6C" secondAttribute="leading" id="SVJ-0A-QRN"/>
                                                             <constraint firstAttribute="bottom" secondItem="LHy-Ks-4Lc" secondAttribute="bottom" id="aag-wr-cs4"/>
                                                             <constraint firstAttribute="trailing" secondItem="LHy-Ks-4Lc" secondAttribute="trailing" id="gXh-dW-K67"/>
+                                                            <constraint firstAttribute="trailing" secondItem="et0-N2-c99" secondAttribute="trailing" id="haT-J5-xtC"/>
                                                             <constraint firstItem="LHy-Ks-4Lc" firstAttribute="top" secondItem="Ewc-JB-E6C" secondAttribute="top" id="hiJ-Ui-M9g"/>
                                                             <constraint firstItem="LHy-Ks-4Lc" firstAttribute="leading" secondItem="Ewc-JB-E6C" secondAttribute="leading" id="iuY-zT-zYk"/>
+                                                            <constraint firstAttribute="bottom" secondItem="et0-N2-c99" secondAttribute="bottom" id="sYy-Aj-Bfe"/>
                                                         </constraints>
                                                         <connections>
+                                                            <outlet property="seperator" destination="et0-N2-c99" id="pks-FL-Bct"/>
                                                             <outlet property="title" destination="LHy-Ks-4Lc" id="Too-gc-TSq"/>
                                                         </connections>
                                                     </collectionViewCell>
@@ -787,6 +799,9 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" red="0.050980392156862744" green="0.52941176470588236" blue="0.78823529411764703" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
                     </navigationBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="QAZ-Pv-IYf"/>

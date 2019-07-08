@@ -27,7 +27,6 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     @IBOutlet weak var cvheight: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
-        bgheight.constant = scroll.frame.height * 1.2
         scroll.delegate = self
         self.navigationItem.hidesBackButton = true;
         self.navigationItem.title = "Main"
@@ -49,9 +48,36 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let foregroundScrollviewHeight = scroll.contentSize.height - scroll.bounds.height
         let percentageScroll = scroll.contentOffset.y / foregroundScrollviewHeight
-        let backgroundScrollViewHeight = backscroll.contentSize.height - (backscroll.bounds.height)
-        print(percentageScroll)
+        print(scroll.contentSize.height)
+        var backgroundScrollViewHeight:CGFloat = 5//backscroll.contentSize.height - (backscroll.bounds.height)
+        switch Int(scroll.contentSize.height) {
+        case 700:
+            backgroundScrollViewHeight = 5
+            break
+        case 820:
+            backgroundScrollViewHeight = 100
+            break
+        case 860:
+            backgroundScrollViewHeight = 120
+            break
+        case 900:
+            backgroundScrollViewHeight = 120
+            break
+        case 940:
+            backgroundScrollViewHeight = 120
+            break
+        case 980:
+            backgroundScrollViewHeight = 150
+            break
+        case 1020:
+            backgroundScrollViewHeight = 150
+            break
+        default:
+            backgroundScrollViewHeight = 5
+            break
+        }
         backscroll.contentOffset = CGPoint(x: 0, y: backgroundScrollViewHeight * percentageScroll)
+
     }
     func load(){
         let url = URL(string: "https://mygju.gju.edu.jo/faces/student_view/profile/student_profile.xhtml")!
@@ -120,6 +146,12 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "subm", for: indexPath) as! subsection
         //cell.name.text = courses[indexPath.section][indexPath.row].
         cell.title.text = tabledata[indexPath.section][indexPath.row]
+        if(tabledata[indexPath.section].indices.contains(indexPath.row + 1) == false){
+            cell.seperator.backgroundColor = UIColor.white
+        }else{
+            cell.seperator.backgroundColor = UIColor(red: 0.784, green: 0.784, blue: 0.784, alpha: 1.0)
+
+        }
         return cell;
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -136,6 +168,28 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         sectionHeaderView.title.text = sections[indexPath.section]
         sectionHeaderView.title.tag = indexPath.section
         sectionHeaderView.delegate = self
+        if(expanded.contains(indexPath.section)){
+            sectionHeaderView.arrow.transform = CGAffineTransform(rotationAngle: .pi/2)
+        }else{
+            sectionHeaderView.arrow.transform = CGAffineTransform(rotationAngle: 0)
+        }
+        switch indexPath.section {
+        case 0:
+            sectionHeaderView.title.backgroundColor = UIColor(red: 0.047, green: 0.431, blue: 0.662, alpha: 1.0)
+            break
+        case 1:
+            sectionHeaderView.title.backgroundColor = UIColor(red: 0.050, green: 0.458, blue: 0.698, alpha: 1.0)
+            break
+        case 2:
+            sectionHeaderView.title.backgroundColor = UIColor(red: 0.054, green: 0.494, blue: 0.752, alpha: 1.0)
+            break
+        case 3:
+            sectionHeaderView.title.backgroundColor = UIColor(red: 0.050, green: 0.529, blue: 0.788, alpha: 1.0)
+            break
+        default:
+            sectionHeaderView.title.backgroundColor = UIColor(red: 0.050, green: 0.529, blue: 0.788, alpha: 1.0)
+            break
+        }
         return sectionHeaderView
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -163,6 +217,10 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut,.allowUserInteraction,.preferredFramesPerSecond60], animations: {
             self.scroll.layoutIfNeeded()
         }, completion: nil)
+        //print(scroll.contentSize.height)
+        if(scroll.contentSize.height > scroll.frame.height ){
+            
+        }
         UIView.transition(with: cv, duration: 0.5, options: [.transitionCrossDissolve,.allowUserInteraction,.beginFromCurrentState,.curveEaseInOut,.preferredFramesPerSecond60], animations: {
             //Do the data reload here
             self.cv.reloadData()
@@ -175,5 +233,8 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         expanded.removeAll()
         cv.reloadData()
         cvheight.constant = 160.0
+    }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }
