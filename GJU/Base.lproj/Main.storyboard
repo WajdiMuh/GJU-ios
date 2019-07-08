@@ -213,14 +213,20 @@
                                                     <constraint firstAttribute="height" constant="156" id="cIQ-Kl-qBb"/>
                                                 </constraints>
                                             </imageView>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student ID :" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OZt-qa-ju4" customClass="OutLineLabel" customModule="GJU" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="279.5" width="375" height="33.5"/>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Student ID :" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="OZt-qa-ju4" customClass="OutLineLabel" customModule="GJU" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="279.5" width="335" height="33.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="33.5" id="Arq-6O-ama"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Major :" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q05-aI-nlx" customClass="OutLineLabel" customModule="GJU" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="323" width="375" height="33.5"/>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Major :" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="q05-aI-nlx" customClass="OutLineLabel" customModule="GJU" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="323" width="335" height="33.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="33.5" id="CPw-Cv-eOw"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -237,8 +243,11 @@
                                                     <action selector="signouttap:" destination="cPa-UA-gxi" eventType="touchUpInside" id="nvx-EM-KsH"/>
                                                 </connections>
                                             </button>
-                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name :" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVq-KH-wzD" customClass="OutLineLabel" customModule="GJU" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="236" width="375" height="33.5"/>
+                                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name :" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="SVq-KH-wzD" customClass="OutLineLabel" customModule="GJU" customModuleProvider="target">
+                                                <rect key="frame" x="20" y="236" width="335" height="33.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="33.5" id="dRu-bw-QDM"/>
+                                                </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -350,21 +359,21 @@
                                             <constraint firstItem="3XB-Q1-pBb" firstAttribute="leading" secondItem="ezV-NC-aV2" secondAttribute="leading" constant="10" id="5Og-Yj-e1m"/>
                                             <constraint firstItem="yN5-6U-0S6" firstAttribute="height" secondItem="P34-AA-geO" secondAttribute="height" id="7n5-QJ-YAF"/>
                                             <constraint firstItem="3XB-Q1-pBb" firstAttribute="top" secondItem="q05-aI-nlx" secondAttribute="bottom" constant="20" id="AOl-en-3s5"/>
-                                            <constraint firstAttribute="trailing" secondItem="q05-aI-nlx" secondAttribute="trailing" id="E0n-3O-yQF"/>
-                                            <constraint firstAttribute="trailing" secondItem="OZt-qa-ju4" secondAttribute="trailing" id="FGz-aA-ZPE"/>
+                                            <constraint firstAttribute="trailing" secondItem="q05-aI-nlx" secondAttribute="trailing" constant="20" id="E0n-3O-yQF"/>
+                                            <constraint firstAttribute="trailing" secondItem="OZt-qa-ju4" secondAttribute="trailing" constant="20" id="FGz-aA-ZPE"/>
                                             <constraint firstItem="yN5-6U-0S6" firstAttribute="centerX" secondItem="ezV-NC-aV2" secondAttribute="centerX" id="Grm-BY-4fJ"/>
                                             <constraint firstItem="yN5-6U-0S6" firstAttribute="width" secondItem="P34-AA-geO" secondAttribute="width" id="IUT-mH-q13"/>
-                                            <constraint firstItem="SVq-KH-wzD" firstAttribute="leading" secondItem="ezV-NC-aV2" secondAttribute="leading" id="TpM-JL-4JG"/>
-                                            <constraint firstAttribute="trailing" secondItem="SVq-KH-wzD" secondAttribute="trailing" id="aFq-8X-6wh"/>
+                                            <constraint firstItem="SVq-KH-wzD" firstAttribute="leading" secondItem="ezV-NC-aV2" secondAttribute="leading" constant="20" id="TpM-JL-4JG"/>
+                                            <constraint firstAttribute="trailing" secondItem="SVq-KH-wzD" secondAttribute="trailing" constant="20" id="aFq-8X-6wh"/>
                                             <constraint firstItem="P34-AA-geO" firstAttribute="top" secondItem="ezV-NC-aV2" secondAttribute="top" constant="40" id="ddX-K2-bwn"/>
                                             <constraint firstItem="q05-aI-nlx" firstAttribute="top" secondItem="OZt-qa-ju4" secondAttribute="bottom" constant="10" id="fOx-U4-sHI"/>
                                             <constraint firstAttribute="bottom" secondItem="3XB-Q1-pBb" secondAttribute="bottom" constant="20" id="hdB-ei-Pga"/>
                                             <constraint firstItem="yN5-6U-0S6" firstAttribute="top" secondItem="P34-AA-geO" secondAttribute="top" id="mZ9-bs-30O"/>
                                             <constraint firstAttribute="trailing" secondItem="3XB-Q1-pBb" secondAttribute="trailing" constant="10" id="oOn-Hm-BUG"/>
                                             <constraint firstItem="SVq-KH-wzD" firstAttribute="top" secondItem="P34-AA-geO" secondAttribute="bottom" constant="40" id="qGW-cX-TRN"/>
-                                            <constraint firstItem="OZt-qa-ju4" firstAttribute="leading" secondItem="ezV-NC-aV2" secondAttribute="leading" id="vdj-1J-fDU"/>
+                                            <constraint firstItem="OZt-qa-ju4" firstAttribute="leading" secondItem="ezV-NC-aV2" secondAttribute="leading" constant="20" id="vdj-1J-fDU"/>
                                             <constraint firstItem="OZt-qa-ju4" firstAttribute="top" secondItem="SVq-KH-wzD" secondAttribute="bottom" constant="10" id="xge-s3-p8a"/>
-                                            <constraint firstItem="q05-aI-nlx" firstAttribute="leading" secondItem="ezV-NC-aV2" secondAttribute="leading" id="zyh-Zo-smW"/>
+                                            <constraint firstItem="q05-aI-nlx" firstAttribute="leading" secondItem="ezV-NC-aV2" secondAttribute="leading" constant="20" id="zyh-Zo-smW"/>
                                         </constraints>
                                     </view>
                                 </subviews>

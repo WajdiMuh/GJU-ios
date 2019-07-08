@@ -47,29 +47,39 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let foregroundScrollviewHeight = scroll.contentSize.height - scroll.bounds.height
+        print(foregroundScrollviewHeight)
         let percentageScroll = scroll.contentOffset.y / foregroundScrollviewHeight
         var backgroundScrollViewHeight:CGFloat = 5//backscroll.contentSize.height - (backscroll.bounds.height)
         switch Int(scroll.contentSize.height) {
-        case 700:
+        case 556:
             backgroundScrollViewHeight = 5
             break
-        case 820:
+        case 596:
+            backgroundScrollViewHeight = 15
+            break
+        case 636:
+            backgroundScrollViewHeight = 50
+            break
+        case 716:
             backgroundScrollViewHeight = 100
             break
-        case 860:
+        case 756:
             backgroundScrollViewHeight = 120
             break
-        case 900:
+        case 836:
             backgroundScrollViewHeight = 120
             break
-        case 940:
-            backgroundScrollViewHeight = 120
+        case 876:
+            backgroundScrollViewHeight = 130
             break
-        case 980:
+        case 916:
             backgroundScrollViewHeight = 150
             break
-        case 1020:
-            backgroundScrollViewHeight = 150
+        case 956:
+            backgroundScrollViewHeight = 170
+            break
+        case 996:
+            backgroundScrollViewHeight = 190
             break
         default:
             backgroundScrollViewHeight = 5
