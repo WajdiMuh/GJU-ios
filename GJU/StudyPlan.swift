@@ -9,7 +9,7 @@
 import UIKit
 import SwiftSoup
 
-class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate {
+class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate {
     var sections:Elements? = nil
     var sectionhours:[Elements] = []
     var courses: [[Element]] = []
@@ -17,6 +17,8 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     var matchsection:[Int] = []
     @IBOutlet weak var searchcv: UISearchBar!
     @IBOutlet weak var table: UICollectionView!
+    @IBOutlet weak var outscroll: UIScrollView!
+    @IBOutlet weak var actcont: UIView!
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(searchcv.text?.count == 0 || searchcv.text == nil){
             return courses[section].count ;
@@ -115,6 +117,12 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchcv.backgroundImage = UIImage()
+        let down = UISwipeGestureRecognizer(target : self, action : #selector(StudyPlan.downSwipe))
+        down.direction = .down
+        down.delegate = self
+        self.actcont.addGestureRecognizer(down)
+        table.panGestureRecognizer.require(toFail: down)
         let layout = table.collectionViewLayout as? UICollectionViewFlowLayout
         layout?.sectionHeadersPinToVisibleBounds = true
         self.navigationItem.title = "Study Plan"
@@ -206,4 +214,24 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     }
     */
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: false)
+    }
+    @objc func downSwipe(){
+        outscroll.setContentOffset(.zero, animated: true)
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    }
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if(gestureRecognizer != table.panGestureRecognizer){
+            if(table.contentOffset == .zero){
+                return true
+            }else{
+                return false
+            }
+        }else{
+            return true
+        }
+    }
 }
