@@ -9,7 +9,7 @@
 import UIKit
 import SwiftSoup
 
-class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate,UIScrollViewDelegate,UIGestureRecognizerDelegate {
+class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate,UIGestureRecognizerDelegate {
     var sections:Elements? = nil
     var sectionhours:[Elements] = []
     var courses: [[Element]] = []
@@ -19,6 +19,8 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     @IBOutlet weak var table: UICollectionView!
     @IBOutlet weak var outscroll: UIScrollView!
     @IBOutlet weak var actcont: UIView!
+    @IBOutlet weak var arrowimage: UIImageView!
+    @IBOutlet weak var wholebutton: UIButton!
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(searchcv.text?.count == 0 || searchcv.text == nil){
             return courses[section].count ;
@@ -219,19 +221,43 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: false)
     }
     @objc func downSwipe(){
+        UIView.transition(with: arrowimage, duration: 0.5, options: [.allowUserInteraction,.beginFromCurrentState,.curveEaseInOut,.preferredFramesPerSecond60], animations: {
+            self.arrowimage.transform = CGAffineTransform(rotationAngle: .pi)
+        }, completion: nil)
         outscroll.setContentOffset(.zero, animated: true)
-    }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        wholebutton.isHidden = false
     }
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-        if(gestureRecognizer != table.panGestureRecognizer){
-            if(table.contentOffset == .zero){
-                return true
+        if(wholebutton.isHidden == true){
+            if(gestureRecognizer != table.panGestureRecognizer){
+                if(table.contentOffset == .zero){
+                    return true
+                }else{
+                    return false
+                }
             }else{
-                return false
+                return true
             }
         }else{
-            return true
+            return false
         }
     }
+    @IBAction func arrowclick(_ sender: Any) {
+        wholebutton.isHidden = false
+        UIView.transition(with: arrowimage, duration: 0.5, options: [.allowUserInteraction,.beginFromCurrentState,.curveEaseInOut,.preferredFramesPerSecond60], animations: {
+            self.arrowimage.transform = CGAffineTransform(rotationAngle: .pi)
+        }, completion: nil)
+        outscroll.setContentOffset(.zero, animated: true)
+    }
+    @IBAction func wholetap(_ sender: Any, forEvent event: UIEvent) {
+        guard let touch = event.allTouches?.first else { return }
+        if(touch.tapCount == 1){
+            wholebutton.isHidden = true
+            UIView.transition(with: arrowimage, duration: 0.5, options: [.allowUserInteraction,.beginFromCurrentState,.curveEaseInOut,.preferredFramesPerSecond60], animations: {
+                self.arrowimage.transform = .identity
+            }, completion: nil)
+            outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: true)
+        }
+    }
+    
 }

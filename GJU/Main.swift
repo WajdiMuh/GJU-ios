@@ -20,6 +20,7 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     @IBOutlet weak var backscroll: UIScrollView!
     @IBOutlet weak var pbg: UIView!
     @IBOutlet weak var bgheight: NSLayoutConstraint!
+    
     let tabledata:[[String]] = [["My Information"],["Study Plan","Course Sections","Schedules","Evaluations","Grades","Transcript"],["Account","Tuition Calculation","Fees"],["Registration"]]
     let sections:[String] = ["Profile","Academic Affairs","Financial Affairs","Registration"]
     var expanded:[Int] = []
@@ -47,7 +48,7 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let foregroundScrollviewHeight = scroll.contentSize.height - scroll.bounds.height
-        print(foregroundScrollviewHeight)
+        //print(foregroundScrollviewHeight)
         let percentageScroll = scroll.contentOffset.y / foregroundScrollviewHeight
         var backgroundScrollViewHeight:CGFloat = 5//backscroll.contentSize.height - (backscroll.bounds.height)
         switch Int(scroll.contentSize.height) {
@@ -222,17 +223,14 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         //scroll.setNeedsLayout()
         UIView.animate(withDuration: 0.5, delay: 0, options: [.curveEaseInOut,.allowUserInteraction,.preferredFramesPerSecond60], animations: {
             self.scroll.layoutIfNeeded()
+            if(self.scroll.contentSize.height - self.scroll.bounds.height > 0){
+                self.scroll.setContentOffset(CGPoint.init(x: 0, y: (self.scroll.contentSize.height - self.scroll.bounds.height)), animated: true)
+            }
         }, completion: nil)
-        //print(scroll.contentSize.height)
-        if(scroll.contentSize.height > scroll.frame.height ){
-            
-        }
         UIView.transition(with: cv, duration: 0.5, options: [.transitionCrossDissolve,.allowUserInteraction,.beginFromCurrentState,.curveEaseInOut,.preferredFramesPerSecond60], animations: {
             //Do the data reload here
             self.cv.reloadData()
         }, completion: nil)
-        
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
