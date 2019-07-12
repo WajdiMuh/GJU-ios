@@ -9,66 +9,96 @@
 import UIKit
 import SwiftSoup
 
-class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate,UIGestureRecognizerDelegate {
+class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate {
     var sections:Elements? = nil
     var sectionhours:[Elements] = []
     var courses: [[Element]] = []
     var matches = [[Element]]()
     var matchsection:[Int] = []
+    var infodata:[String] = ["Degree : ","Faculty : ","Department : ","Major : ","Study Plan : ","Enrollment Year : ","Student Status : ","Program : ","Study Plan Credit Hours : ","Account Status : "]
     @IBOutlet weak var searchcv: UISearchBar!
     @IBOutlet weak var table: UICollectionView!
     @IBOutlet weak var outscroll: UIScrollView!
     @IBOutlet weak var actcont: UIView!
     @IBOutlet weak var arrowimage: UIImageView!
     @IBOutlet weak var wholebutton: UIButton!
+    @IBOutlet weak var outview: UIView!
+    @IBOutlet weak var infocv: UICollectionView!
+    @IBOutlet weak var pagecontrol: UIPageControl!
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if(searchcv.text?.count == 0 || searchcv.text == nil){
-            return courses[section].count ;
+        if(collectionView == infocv){
+            return 10
         }else{
-            return matches[section].count;
+            if(searchcv.text?.count == 0 || searchcv.text == nil){
+                return courses[section].count ;
+            }else{
+                return matches[section].count;
+            }
         }
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if(searchcv.text?.count == 0 || searchcv.text == nil){
-            return sections?.count ?? 0;
+        if(collectionView == infocv){
+            return 1
         }else{
-            return matches.count;
+            if(searchcv.text?.count == 0 || searchcv.text == nil){
+                return sections?.count ?? 0;
+            }else{
+                return matches.count;
+            }
         }
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "course", for: indexPath) as! course
-            //cell.name.text = courses[indexPath.section][indexPath.row].
-            if(searchcv.text?.count == 0 || searchcv.text == nil){
-                do {
-                    cell.name.text = try courses[indexPath.section][indexPath.row].children().array()[1].text()
-                    cell.id.text = try courses[indexPath.section][indexPath.row].children().array()[0].text()
-                } catch Exception.Error( let message) {
-                    print(message)
-                } catch {
-                    print("error")
-                }
+        if(collectionView == infocv){
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! infocell
+            cell.label.text = infodata[indexPath.row]
+            if(cell.frame.origin.y + cell.frame.height >= infocv.frame.height){
+                //print("end")
+                cell.seperator.isHidden = true
             }else{
-                do {
-                    cell.name.text = try matches[indexPath.section][indexPath.row].children().array()[1].text()
-                    cell.id.text = try matches[indexPath.section][indexPath.row].children().array()[0].text()
-                } catch Exception.Error( let message) {
-                    print(message)
-                } catch {
-                    print("error")
-                }
+                cell.seperator.isHidden = false
             }
-        return cell;
+            return cell;
+        }else{
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "course", for: indexPath) as! course
+                //cell.name.text = courses[indexPath.section][indexPath.row].
+                if(searchcv.text?.count == 0 || searchcv.text == nil){
+                    do {
+                        cell.name.text = try courses[indexPath.section][indexPath.row].children().array()[1].text()
+                        cell.id.text = try courses[indexPath.section][indexPath.row].children().array()[0].text()
+                    } catch Exception.Error( let message) {
+                        print(message)
+                    } catch {
+                        print("error")
+                    }
+                }else{
+                    do {
+                        cell.name.text = try matches[indexPath.section][indexPath.row].children().array()[1].text()
+                        cell.id.text = try matches[indexPath.section][indexPath.row].children().array()[0].text()
+                    } catch Exception.Error( let message) {
+                        print(message)
+                    } catch {
+                        print("error")
+                    }
+                }
+            return cell;
+        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        if(collectionView == table){
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }else{
+            return UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
+        }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let width = view.frame.size.width
-        return CGSize(width: width, height: 50)
+        if(collectionView == table){
+            let width = view.frame.size.width
+            return CGSize(width: width, height: 50)
+        }else{
+            return CGSize(width: infocv.frame.width - 10, height: heightForLabel(text: infodata[indexPath.row], font: .systemFont(ofSize: 17.0), width: infocv.frame.width - 10) + 11.0)
+        }
     }
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
     {
@@ -95,13 +125,15 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         return sectionHeaderView
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Coursecontrol") as? Coursecontroller
-        if(searchcv.text?.count == 0 || searchcv.text == nil){
-            vc?.courseinfo = courses[indexPath.section][indexPath.row].children()
-        }else{
-            vc?.courseinfo = matches[indexPath.section][indexPath.row].children()
+        if(collectionView == table){
+                let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Coursecontrol") as? Coursecontroller
+            if(searchcv.text?.count == 0 || searchcv.text == nil){
+                vc?.courseinfo = courses[indexPath.section][indexPath.row].children()
+            }else{
+                vc?.courseinfo = matches[indexPath.section][indexPath.row].children()
+            }
+                self.navigationController?.pushViewController(vc!, animated: true)
         }
-            self.navigationController?.pushViewController(vc!, animated: true)
     }
     @IBAction func headerclick(_ sender: Any) {
         let sb:UIButton = (sender as! UIButton)
@@ -124,6 +156,9 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         down.direction = .down
         down.delegate = self
         self.actcont.addGestureRecognizer(down)
+        let up = UISwipeGestureRecognizer(target : self, action : #selector(StudyPlan.upSwipe))
+        up.direction = .up
+        outview.addGestureRecognizer(up)
         table.panGestureRecognizer.require(toFail: down)
         let layout = table.collectionViewLayout as? UICollectionViewFlowLayout
         layout?.sectionHeadersPinToVisibleBounds = true
@@ -133,6 +168,26 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             if(error == nil){
             do {
                 let doc: Document = try SwiftSoup.parse(String(decoding: data!, as: UTF8.self))
+                let degree:String = try (doc.getElementById("form:degree")?.text())!
+                self.infodata[0] = self.infodata[0] + degree
+                let faculty:String = try (doc.getElementById("form:faculty")?.text())!
+                self.infodata[1] = self.infodata[1] + faculty
+                let department:String = try (doc.getElementById("form:department")?.text())!
+                self.infodata[2] = self.infodata[2] + department
+                let major:String = try (doc.getElementById("form:major")?.text())!
+                self.infodata[3] = self.infodata[3] + major
+                let plan:String = try (doc.getElementById("form:plan")?.text())!
+                self.infodata[4] = self.infodata[4] + plan
+                let enroll:String = try (doc.getElementById("form:enrollment_year")?.text())!
+                self.infodata[5] = self.infodata[5] + enroll
+                let status:String = try (doc.getElementById("form:status")?.text())!
+                self.infodata[6] = self.infodata[6] + status
+                let program:String = try (doc.getElementById("form:program")?.text())!
+                self.infodata[7] = self.infodata[7] + program
+                let spch:String = try (doc.getElementById("form:j_idt61")?.parent()?.nextElementSibling()?.child(0).text())!
+                self.infodata[8] = self.infodata[8] + spch
+                let active:String = try (doc.getElementById("form:inactive")?.text())!
+                self.infodata[9] = self.infodata[9] + active
                 self.sections = try doc.getElementsByClass("ui-datatable-header ui-widget-header ui-corner-top")
                 let hoursofsection:Elements = try doc.getElementsContainingOwnText("Section Total Credit Hours:")
                 for e in hoursofsection{
@@ -155,6 +210,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                 }
                  DispatchQueue.main.async {
                     self.table.reloadData()
+                    self.infocv.reloadData()
                 }
                 
             } catch Exception.Error( let message) {
@@ -216,16 +272,31 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     }
     */
 
-    override func viewDidLayoutSubviews() {
+    /*override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: false)
+    }*/
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        outscroll.layoutIfNeeded()
+        outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: false)
+        wholebutton.isHidden = true
+        self.arrowimage.transform = .identity
     }
     @objc func downSwipe(){
+        self.view.endEditing(true)
+        wholebutton.isHidden = false
         UIView.transition(with: arrowimage, duration: 0.5, options: [.allowUserInteraction,.beginFromCurrentState,.curveEaseInOut,.preferredFramesPerSecond60], animations: {
             self.arrowimage.transform = CGAffineTransform(rotationAngle: .pi)
         }, completion: nil)
         outscroll.setContentOffset(.zero, animated: true)
-        wholebutton.isHidden = false
+    }
+    @objc func upSwipe(){
+        wholebutton.isHidden = true
+        UIView.transition(with: arrowimage, duration: 0.5, options: [.allowUserInteraction,.beginFromCurrentState,.curveEaseInOut,.preferredFramesPerSecond60], animations: {
+            self.arrowimage.transform = .identity
+        }, completion: nil)
+        outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: true)
     }
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if(wholebutton.isHidden == true){
@@ -243,6 +314,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         }
     }
     @IBAction func arrowclick(_ sender: Any) {
+        self.view.endEditing(true)
         wholebutton.isHidden = false
         UIView.transition(with: arrowimage, duration: 0.5, options: [.allowUserInteraction,.beginFromCurrentState,.curveEaseInOut,.preferredFramesPerSecond60], animations: {
             self.arrowimage.transform = CGAffineTransform(rotationAngle: .pi)
@@ -259,5 +331,20 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: true)
         }
     }
-    
+    func heightForLabel(text:String, font:UIFont, width:CGFloat) -> CGFloat
+    {
+        let label:UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: width, height: CGFloat.greatestFiniteMagnitude))
+        label.numberOfLines = 0
+        label.lineBreakMode = .byTruncatingTail
+        label.font = font
+        label.text = text
+        label.sizeToFit()
+        return label.frame.height
+        
+    }
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if(scrollView == infocv){
+            pagecontrol.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+        }
+    }
 }

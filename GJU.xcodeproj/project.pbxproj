@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0D15826D22CAA07B00C7F887 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D15826C22CAA07B00C7F887 /* Main.swift */; };
+		0D8A77ED22D8F97B0069F298 /* infocell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8A77EC22D8F97B0069F298 /* infocell.swift */; };
 		0D8C640822CD827400C65F3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8C640722CD827400C65F3E /* Assets.xcassets */; };
 		0D93A33122D11B710016A2B6 /* OutLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D93A33022D11B710016A2B6 /* OutLineLabel.swift */; };
 		0D93A34522D195F00016A2B6 /* mainsection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D93A34422D195F00016A2B6 /* mainsection.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		0D15826C22CAA07B00C7F887 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
+		0D8A77EC22D8F97B0069F298 /* infocell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infocell.swift; sourceTree = "<group>"; };
 		0D8C640722CD827400C65F3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D93A33022D11B710016A2B6 /* OutLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutLineLabel.swift; sourceTree = "<group>"; };
 		0D93A34422D195F00016A2B6 /* mainsection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainsection.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				0DA56D1E22CAEA8B003ACD2A /* course.swift */,
 				0DD0D82A22CC329800207659 /* Coursecontroller.swift */,
 				0DA8479D22CEC6F600CBAF5E /* gjub.swift */,
+				0D8A77EC22D8F97B0069F298 /* infocell.swift */,
 				0D93A33022D11B710016A2B6 /* OutLineLabel.swift */,
 				0DA8479022CEBC0900CBAF5E /* eye.png */,
 				0D95256722CA3ED700A8585C /* Main.storyboard */,
@@ -434,6 +437,7 @@
 				0DA56D1F22CAEA8B003ACD2A /* course.swift in Sources */,
 				0DA56D1D22CAE151003ACD2A /* StudyPlan.swift in Sources */,
 				0D95256422CA3ED700A8585C /* AppDelegate.swift in Sources */,
+				0D8A77ED22D8F97B0069F298 /* infocell.swift in Sources */,
 				0D93A34722D197DC0016A2B6 /* subsection.swift in Sources */,
 				0DA8479E22CEC6F600CBAF5E /* gjub.swift in Sources */,
 			);
