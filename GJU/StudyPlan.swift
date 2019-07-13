@@ -136,8 +136,16 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             }else{
                 vc?.courseinfo = matches[indexPath.section][indexPath.row].children()
             }
-                self.navigationController?.pushViewController(vc!, animated: true)
+                //self.navigationController?.pushViewController(vc!, animated: true)
+            vc!.providesPresentationContextTransitionStyle = true
+            vc!.definesPresentationContext = true
+            vc?.modalTransitionStyle = .crossDissolve
+            vc?.modalPresentationStyle = .overCurrentContext
+            present(vc!, animated: true, completion: nil)
         }
+        /*let modalViewController = Coursecontroller()
+        modalViewController.modalPresentationStyle = .overCurrentContext
+        present(modalViewController, animated: true, completion: nil)*/
     }
     @IBAction func headerclick(_ sender: Any) {
         let sb:UIButton = (sender as! UIButton)
