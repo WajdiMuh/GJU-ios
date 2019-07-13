@@ -57,7 +57,11 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                 //print("end")
                 cell.seperator.isHidden = true
             }else{
-                cell.seperator.isHidden = false
+                if(infodata.indices.contains(indexPath.row + 1) == false){
+                    cell.seperator.isHidden = true
+                }else{
+                    cell.seperator.isHidden = false
+                }
             }
             return cell;
         }else{
@@ -211,6 +215,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                  DispatchQueue.main.async {
                     self.table.reloadData()
                     self.infocv.reloadData()
+                    self.pagecontrol.numberOfPages = Int(self.infocv.contentSize.width) / Int(self.infocv.frame.width) + 1
                 }
                 
             } catch Exception.Error( let message) {
@@ -282,6 +287,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: false)
         wholebutton.isHidden = true
         self.arrowimage.transform = .identity
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     @objc func downSwipe(){
         self.view.endEditing(true)
@@ -290,6 +296,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             self.arrowimage.transform = CGAffineTransform(rotationAngle: .pi)
         }, completion: nil)
         outscroll.setContentOffset(.zero, animated: true)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     @objc func upSwipe(){
         wholebutton.isHidden = true
@@ -297,6 +304,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             self.arrowimage.transform = .identity
         }, completion: nil)
         outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: true)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if(wholebutton.isHidden == true){
@@ -320,6 +328,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             self.arrowimage.transform = CGAffineTransform(rotationAngle: .pi)
         }, completion: nil)
         outscroll.setContentOffset(.zero, animated: true)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     @IBAction func wholetap(_ sender: Any, forEvent event: UIEvent) {
         guard let touch = event.allTouches?.first else { return }
@@ -329,6 +338,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                 self.arrowimage.transform = .identity
             }, completion: nil)
             outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: true)
+            navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         }
     }
     func heightForLabel(text:String, font:UIFont, width:CGFloat) -> CGFloat
@@ -344,7 +354,8 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if(scrollView == infocv){
-            pagecontrol.currentPage = Int(scrollView.contentOffset.x) / Int(scrollView.frame.width)
+            //print(Float(scrollView.contentOffset.x / scrollView.frame.width).rounded())
+            pagecontrol.currentPage = Int(Float(scrollView.contentOffset.x / scrollView.frame.width).rounded())
         }
     }
 }

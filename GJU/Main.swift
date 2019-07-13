@@ -156,6 +156,11 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "subm", for: indexPath) as! subsection
         //cell.name.text = courses[indexPath.section][indexPath.row].
         cell.title.text = tabledata[indexPath.section][indexPath.row]
+        if(indexPath.row == 0){
+            cell.shadow.isHidden = false
+        }else{
+            cell.shadow.isHidden = true
+        }
         if(tabledata[indexPath.section].indices.contains(indexPath.row + 1) == false){
             cell.seperator.backgroundColor = UIColor.white
         }else{

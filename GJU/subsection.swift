@@ -11,4 +11,5 @@ import UIKit
 class subsection: UICollectionViewCell {
     @IBOutlet weak var title: UILabel!
     @IBOutlet weak var seperator: UIView!
+    @IBOutlet weak var shadow: UIImageView!
 }
