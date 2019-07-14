@@ -19,7 +19,7 @@ class Coursecontroller: UIViewController {
     @IBOutlet weak var chours: UILabel!
     @IBOutlet weak var thours: UILabel!
     @IBOutlet weak var phours: UILabel!
-
+    @IBOutlet var background: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         do {
@@ -55,13 +55,26 @@ class Coursecontroller: UIViewController {
     
     
     @IBAction func outtap(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+        UIView.animate(withDuration: 0.4, animations: {
+            self.background.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        }) { _ in
+            self.dismiss(animated: true, completion: nil)
+        }
     }
     
     @IBAction func closetap(_ sender: Any) {
-         self.dismiss(animated: true, completion: nil)
+        UIView.animate(withDuration: 0.4, animations: {
+            self.background.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
+        }) { _ in
+            self.dismiss(animated: true, completion: nil)
+        }
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.animate(withDuration: 0.3) {
+            self.background.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.55)
+        }
+    }
     /*
     // MARK: - Navigation
 

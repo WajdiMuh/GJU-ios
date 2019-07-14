@@ -19,6 +19,7 @@
 		0D95256E22CA3ED900A8585C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0D95256C22CA3ED900A8585C /* LaunchScreen.storyboard */; };
 		0D95257922CA3ED900A8585C /* GJUTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D95257822CA3ED900A8585C /* GJUTests.swift */; };
 		0D95258422CA3ED900A8585C /* GJUUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D95258322CA3ED900A8585C /* GJUUITests.swift */; };
+		0D96554522DAEA01006E2396 /* mvcanimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D96554422DAEA01006E2396 /* mvcanimator.swift */; };
 		0DA56D1D22CAE151003ACD2A /* StudyPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA56D1C22CAE151003ACD2A /* StudyPlan.swift */; };
 		0DA56D1F22CAEA8B003ACD2A /* course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA56D1E22CAEA8B003ACD2A /* course.swift */; };
 		0DA56D2122CAEB29003ACD2A /* titleofcourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA56D2022CAEB29003ACD2A /* titleofcourses.swift */; };
@@ -69,6 +70,7 @@
 		0D95257F22CA3ED900A8585C /* GJUUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GJUUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0D95258322CA3ED900A8585C /* GJUUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GJUUITests.swift; sourceTree = "<group>"; };
 		0D95258522CA3ED900A8585C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0D96554422DAEA01006E2396 /* mvcanimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mvcanimator.swift; sourceTree = "<group>"; };
 		0DA56D1C22CAE151003ACD2A /* StudyPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudyPlan.swift; sourceTree = "<group>"; };
 		0DA56D1E22CAEA8B003ACD2A /* course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = course.swift; sourceTree = "<group>"; };
 		0DA56D2022CAEB29003ACD2A /* titleofcourses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = titleofcourses.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				0DA8479D22CEC6F600CBAF5E /* gjub.swift */,
 				0D8A77EC22D8F97B0069F298 /* infocell.swift */,
 				0D93A33022D11B710016A2B6 /* OutLineLabel.swift */,
+				0D96554422DAEA01006E2396 /* mvcanimator.swift */,
 				0DA8479022CEBC0900CBAF5E /* eye.png */,
 				0D95256722CA3ED700A8585C /* Main.storyboard */,
 				0D95256C22CA3ED900A8585C /* LaunchScreen.storyboard */,
@@ -438,6 +441,7 @@
 				0DA56D1D22CAE151003ACD2A /* StudyPlan.swift in Sources */,
 				0D95256422CA3ED700A8585C /* AppDelegate.swift in Sources */,
 				0D8A77ED22D8F97B0069F298 /* infocell.swift in Sources */,
+				0D96554522DAEA01006E2396 /* mvcanimator.swift in Sources */,
 				0D93A34722D197DC0016A2B6 /* subsection.swift in Sources */,
 				0DA8479E22CEC6F600CBAF5E /* gjub.swift in Sources */,
 			);

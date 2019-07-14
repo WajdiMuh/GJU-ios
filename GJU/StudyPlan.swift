@@ -9,13 +9,14 @@
 import UIKit
 import SwiftSoup
 
-class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate {
+class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,UIViewControllerTransitioningDelegate {
     var sections:Elements? = nil
     var sectionhours:[Elements] = []
     var courses: [[Element]] = []
     var matches = [[Element]]()
     var matchsection:[Int] = []
     var infodata:[String] = ["Degree : ","Faculty : ","Department : ","Major : ","Study Plan : ","Enrollment Year : ","Student Status : ","Program : ","Study Plan Credit Hours : ","Account Status : "]
+    let transition = mvcanimator()
     @IBOutlet weak var searchcv: UISearchBar!
     @IBOutlet weak var table: UICollectionView!
     @IBOutlet weak var outscroll: UIScrollView!
@@ -137,9 +138,10 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                 vc?.courseinfo = matches[indexPath.section][indexPath.row].children()
             }
                 //self.navigationController?.pushViewController(vc!, animated: true)
-            vc!.providesPresentationContextTransitionStyle = true
-            vc!.definesPresentationContext = true
-            vc?.modalTransitionStyle = .crossDissolve
+            vc!.transitioningDelegate = self
+            //vc!.providesPresentationContextTransitionStyle = true
+            //vc!.definesPresentationContext = true
+            //vc?.modalTransitionStyle = .crossDissolve
             vc?.modalPresentationStyle = .overCurrentContext
             present(vc!, animated: true, completion: nil)
         }
@@ -365,5 +367,17 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             //print(Float(scrollView.contentOffset.x / scrollView.frame.width).rounded())
             pagecontrol.currentPage = Int(Float(scrollView.contentOffset.x / scrollView.frame.width).rounded())
         }
+    }
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController, source: UIViewController)
+        -> UIViewControllerAnimatedTransitioning? {
+            transition.presenting = true
+            return transition
+    }
+    func animationController(forDismissed dismissed: UIViewController)
+        -> UIViewControllerAnimatedTransitioning? {
+            transition.presenting = false
+            return transition
     }
 }
