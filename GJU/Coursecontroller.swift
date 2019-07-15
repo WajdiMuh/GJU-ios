@@ -55,7 +55,7 @@ class Coursecontroller: UIViewController {
     
     
     @IBAction func outtap(_ sender: Any) {
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.preferredFramesPerSecond60,.allowUserInteraction], animations: {
             self.background.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
         }) { _ in
             self.dismiss(animated: true, completion: nil)
@@ -63,7 +63,7 @@ class Coursecontroller: UIViewController {
     }
     
     @IBAction func closetap(_ sender: Any) {
-        UIView.animate(withDuration: 0.4, animations: {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.preferredFramesPerSecond60,.allowUserInteraction], animations: {
             self.background.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.0)
         }) { _ in
             self.dismiss(animated: true, completion: nil)
@@ -71,9 +71,9 @@ class Coursecontroller: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [.preferredFramesPerSecond60,.allowUserInteraction], animations: {
             self.background.backgroundColor = UIColor.init(red: 0.0, green: 0.0, blue: 0.0, alpha: 0.55)
-        }
+        }, completion: nil)
     }
     /*
     // MARK: - Navigation

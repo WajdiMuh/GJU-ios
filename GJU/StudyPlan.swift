@@ -16,6 +16,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     var matches = [[Element]]()
     var matchsection:[Int] = []
     var infodata:[String] = ["Degree : ","Faculty : ","Department : ","Major : ","Study Plan : ","Enrollment Year : ","Student Status : ","Program : ","Study Plan Credit Hours : ","Account Status : "]
+    var average:String = ""
     let transition = mvcanimator()
     @IBOutlet weak var searchcv: UISearchBar!
     @IBOutlet weak var table: UICollectionView!
@@ -177,72 +178,30 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         let layout = table.collectionViewLayout as? UICollectionViewFlowLayout
         layout?.sectionHeadersPinToVisibleBounds = true
         self.navigationItem.title = "Study Plan"
-        let url = URL(string: "https://mygju.gju.edu.jo/faces/study_plan_gen/view_std_study_plan.xhtml")!
-        let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
-            if(error == nil){
-            do {
-                let doc: Document = try SwiftSoup.parse(String(decoding: data!, as: UTF8.self))
-                let degree:String = try (doc.getElementById("form:degree")?.text())!
-                self.infodata[0] = self.infodata[0] + degree
-                let faculty:String = try (doc.getElementById("form:faculty")?.text())!
-                self.infodata[1] = self.infodata[1] + faculty
-                let department:String = try (doc.getElementById("form:department")?.text())!
-                self.infodata[2] = self.infodata[2] + department
-                let major:String = try (doc.getElementById("form:major")?.text())!
-                self.infodata[3] = self.infodata[3] + major
-                let plan:String = try (doc.getElementById("form:plan")?.text())!
-                self.infodata[4] = self.infodata[4] + plan
-                let enroll:String = try (doc.getElementById("form:enrollment_year")?.text())!
-                self.infodata[5] = self.infodata[5] + enroll
-                let status:String = try (doc.getElementById("form:status")?.text())!
-                self.infodata[6] = self.infodata[6] + status
-                let program:String = try (doc.getElementById("form:program")?.text())!
-                self.infodata[7] = self.infodata[7] + program
-                let spch:String = try (doc.getElementById("form:j_idt61")?.parent()?.nextElementSibling()?.child(0).text())!
-                self.infodata[8] = self.infodata[8] + spch
-                let active:String = try (doc.getElementById("form:inactive")?.text())!
-                self.infodata[9] = self.infodata[9] + active
-                self.sections = try doc.getElementsByClass("ui-datatable-header ui-widget-header ui-corner-top")
-                let hoursofsection:Elements = try doc.getElementsContainingOwnText("Section Total Credit Hours:")
-                for e in hoursofsection{
-                    let stch:Element = try e.parent()!.nextElementSibling()!.child(0)
-                    let srch:Element = try e.parent()!.parent()!.nextElementSibling()!.child(1).child(0)
-                    let sectionhourselement:Elements = Elements.init([stch,srch])
-                    //sectionhourselement?.add(try e.parent()!.nextElementSibling()!.child(0))
-                    //sectionhourselement?.add(try e.parent()!.parent()!.nextElementSibling()!.child(1).child(0))
-                    self.sectionhours.append(sectionhourselement)
-                }
-                //print(try self.sectionhours?.first()?.parent()?.parent()?.child(1).child(0))
-                let tablesofcourss:Elements = try doc.getElementsByClass("ui-datatable-data ui-widget-content")
-                for i in 0...(self.sections!.count - 1){
-                    let coursesforsectiion:Elements = tablesofcourss.array()[i].children()
-                    self.courses.append(coursesforsectiion.array())
-                    /*for j in 0...(coursesforsectiion.count - 1){
-                        //print(coursesforsectiion.array()[1])
-                        self.courses[i].append(coursesforsectiion.array()[j])
-                    }*/
-                }
-                 DispatchQueue.main.async {
-                    self.table.reloadData()
-                    self.infocv.reloadData()
-                    self.pagecontrol.numberOfPages = Int(self.infocv.contentSize.width) / Int(self.infocv.frame.width) + 1
-                }
-                
-            } catch Exception.Error( let message) {
-                print(message)
-            } catch {
-                print("error")
+        let opQueue = OperationQueue()
+        let operation1 = BlockOperation {
+            let group = DispatchGroup()
+            group.enter()
+            self.getstudyplan(finished: {
+                group.leave()
+            })
+            group.enter()
+            self.gettranscript(finished: {
+                group.leave()
+            })
+            group.wait()
+        }
+        let operation2 = BlockOperation {
+            DispatchQueue.main.async {
+                self.table.reloadData()
+                self.infocv.reloadData()
+                self.pagecontrol.numberOfPages = Int(self.infocv.contentSize.width) / Int(self.infocv.frame.width) + 1
             }
-            }else{
-                DispatchQueue.main.async {
-                    self.view.makeToast("No Internet Connection", duration: 1.5, position: .bottom)
-                }
-                self.navigationController?.popViewController(animated: true)
-                
-            }
-        })
-        
-        task.resume()
+            print(self.average)
+        }
+        operation2.addDependency(operation1)
+        opQueue.addOperation(operation1)
+        opQueue.addOperation(operation2)
         // Do any additional setup after loading the view.
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -379,5 +338,94 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         -> UIViewControllerAnimatedTransitioning? {
             transition.presenting = false
             return transition
+    }
+    func getstudyplan(finished: @escaping () -> Void){
+        let url = URL(string: "https://mygju.gju.edu.jo/faces/study_plan_gen/view_std_study_plan.xhtml")!
+        let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
+            if(error == nil){
+                do {
+                    let doc: Document = try SwiftSoup.parse(String(decoding: data!, as: UTF8.self))
+                    let degree:String = try (doc.getElementById("form:degree")?.text())!
+                    self.infodata[0] = self.infodata[0] + degree
+                    let faculty:String = try (doc.getElementById("form:faculty")?.text())!
+                    self.infodata[1] = self.infodata[1] + faculty
+                    let department:String = try (doc.getElementById("form:department")?.text())!
+                    self.infodata[2] = self.infodata[2] + department
+                    let major:String = try (doc.getElementById("form:major")?.text())!
+                    self.infodata[3] = self.infodata[3] + major
+                    let plan:String = try (doc.getElementById("form:plan")?.text())!
+                    self.infodata[4] = self.infodata[4] + plan
+                    let enroll:String = try (doc.getElementById("form:enrollment_year")?.text())!
+                    self.infodata[5] = self.infodata[5] + enroll
+                    let status:String = try (doc.getElementById("form:status")?.text())!
+                    self.infodata[6] = self.infodata[6] + status
+                    let program:String = try (doc.getElementById("form:program")?.text())!
+                    self.infodata[7] = self.infodata[7] + program
+                    let spch:String = try (doc.getElementById("form:j_idt61")?.parent()?.nextElementSibling()?.child(0).text())!
+                    self.infodata[8] = self.infodata[8] + spch
+                    let active:String = try (doc.getElementById("form:inactive")?.text())!
+                    self.infodata[9] = self.infodata[9] + active
+                    self.sections = try doc.getElementsByClass("ui-datatable-header ui-widget-header ui-corner-top")
+                    let hoursofsection:Elements = try doc.getElementsContainingOwnText("Section Total Credit Hours:")
+                    for e in hoursofsection{
+                        let stch:Element = try e.parent()!.nextElementSibling()!.child(0)
+                        let srch:Element = try e.parent()!.parent()!.nextElementSibling()!.child(1).child(0)
+                        let sectionhourselement:Elements = Elements.init([stch,srch])
+                        //sectionhourselement?.add(try e.parent()!.nextElementSibling()!.child(0))
+                        //sectionhourselement?.add(try e.parent()!.parent()!.nextElementSibling()!.child(1).child(0))
+                        self.sectionhours.append(sectionhourselement)
+                    }
+                    //print(try self.sectionhours?.first()?.parent()?.parent()?.child(1).child(0))
+                    let tablesofcourss:Elements = try doc.getElementsByClass("ui-datatable-data ui-widget-content")
+                    for i in 0...(self.sections!.count - 1){
+                        let coursesforsectiion:Elements = tablesofcourss.array()[i].children()
+                        self.courses.append(coursesforsectiion.array())
+                        /*for j in 0...(coursesforsectiion.count - 1){
+                         //print(coursesforsectiion.array()[1])
+                         self.courses[i].append(coursesforsectiion.array()[j])
+                         }*/
+                    }
+                    
+                } catch Exception.Error( let message) {
+                    print(message)
+                } catch {
+                    print("error")
+                }
+            }else{
+                DispatchQueue.main.async {
+                    self.view.makeToast("No Internet Connection", duration: 1.5, position: .bottom)
+                }
+                self.navigationController?.popViewController(animated: true)
+                
+            }
+            finished()
+        })
+        
+        task.resume()
+    }
+    func gettranscript(finished: @escaping () -> Void){
+        let url = URL(string: "https://mygju.gju.edu.jo/faces/admin_view/student_affairs/student_details/student_academic_progress/transcript/student_transcript.xhtml")!
+        let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
+            if(error == nil){
+                do {
+                    let doc: Document = try SwiftSoup.parse(String(decoding: data!, as: UTF8.self))
+                    self.average = try (doc.getElementById("student_transcript_form:j_idt63")?.text())!
+                    
+                } catch Exception.Error( let message) {
+                    print(message)
+                } catch {
+                    print("error")
+                }
+            }else{
+                DispatchQueue.main.async {
+                    self.view.makeToast("No Internet Connection", duration: 1.5, position: .bottom)
+                }
+                self.navigationController?.popViewController(animated: true)
+                
+            }
+            finished()
+        })
+        
+        task.resume()
     }
 }
