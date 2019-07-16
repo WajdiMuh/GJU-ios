@@ -1,24 +1,28 @@
 PODS:
+  - lottie-ios (3.1.1)
   - SwiftSoup (2.2.0)
   - TextFieldEffects (1.6.0)
   - Toast-Swift (5.0.0)
 
 DEPENDENCIES:
+  - lottie-ios
   - SwiftSoup
   - TextFieldEffects
   - Toast-Swift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - lottie-ios
     - SwiftSoup
     - TextFieldEffects
     - Toast-Swift
 
 SPEC CHECKSUMS:
+  lottie-ios: 43a472d22b2dd2bed292cc4010c0b4d2e66d3ba8
   SwiftSoup: 230991361c5ba249d140161860a3864a28b63860
   TextFieldEffects: 529b8aff706fb40f82c41c780c0777941a893796
   Toast-Swift: 36f4720243c8582c2be243a60a51e193c761f541
 
-PODFILE CHECKSUM: 4c540ee5e6c755d0e15e4b3605c2e63bbab6d124
+PODFILE CHECKSUM: 43c4eb354aca3f11392f7026daf68658cb617afb
 
 COCOAPODS: 1.7.3

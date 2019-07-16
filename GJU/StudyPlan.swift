@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftSoup
+import Lottie
 
 class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UISearchBarDelegate,UIGestureRecognizerDelegate,UIScrollViewDelegate,UIViewControllerTransitioningDelegate {
     var sections:Elements? = nil
@@ -22,7 +23,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     @IBOutlet weak var table: UICollectionView!
     @IBOutlet weak var outscroll: UIScrollView!
     @IBOutlet weak var actcont: UIView!
-    @IBOutlet weak var arrowimage: UIImageView!
+    @IBOutlet weak var arrowimage: AnimationView!
     @IBOutlet weak var wholebutton: UIButton!
     @IBOutlet weak var outview: UIView!
     @IBOutlet weak var infocv: UICollectionView!
@@ -166,6 +167,10 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        arrowimage.animation = Animation.named("scrollind")
+        arrowimage.loopMode = .loop
+        arrowimage.backgroundBehavior = .pauseAndRestore
+        arrowimage.play()
         searchcv.backgroundImage = UIImage()
         let down = UISwipeGestureRecognizer(target : self, action : #selector(StudyPlan.downSwipe))
         down.direction = .down
