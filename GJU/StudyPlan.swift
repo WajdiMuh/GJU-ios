@@ -17,7 +17,8 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     var matches = [[Element]]()
     var matchsection:[Int] = []
     var infodata:[String] = ["Degree : ","Faculty : ","Department : ","Major : ","Study Plan : ","Enrollment Year : ","Student Status : ","Program : ","Study Plan Credit Hours : ","Account Status : "]
-    var average:String = ""
+    var takencourses:[String] = []
+    var finishedsections:[Bool] = []
     let transition = mvcanimator()
     @IBOutlet weak var searchcv: UISearchBar!
     @IBOutlet weak var table: UICollectionView!
@@ -70,6 +71,9 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         }else{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "course", for: indexPath) as! course
                 //cell.name.text = courses[indexPath.section][indexPath.row].
+            
+            cell.correct.tintColor = UIColor.black
+            cell.correct.image = UIImage(named: "correct")?.withRenderingMode(.alwaysTemplate)
                 if(searchcv.text?.count == 0 || searchcv.text == nil){
                     do {
                         cell.name.text = try courses[indexPath.section][indexPath.row].children().array()[1].text()
@@ -89,6 +93,11 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                         print("error")
                     }
                 }
+            if(takencourses.contains(cell.id.text!)){
+                cell.correct.isHidden = false
+            }else{
+                cell.correct.isHidden = true
+            }
             return cell;
         }
     }
@@ -119,6 +128,11 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                 } catch {
                     print("error")
                 }
+                if(finishedsections[indexPath.section] == true){
+                    sectionHeaderView.correct.isHidden = false
+                }else{
+                    sectionHeaderView.correct.isHidden = true
+                }
             }else{
                 do {
                     sectionHeaderView.titlelabel.text = try sections?.array()[matchsection[indexPath.section]].text()
@@ -127,6 +141,11 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                     print(message)
                 } catch {
                     print("error")
+                }
+                if(finishedsections[matchsection[indexPath.section]] == true){
+                    sectionHeaderView.correct.isHidden = false
+                }else{
+                    sectionHeaderView.correct.isHidden = true
                 }
             }
         return sectionHeaderView
@@ -197,13 +216,38 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             group.wait()
         }
         let operation2 = BlockOperation {
+            do {
+                var takensectionhours:[Int] = Array(repeating: 0, count: self.sections!.count)
+                for courseid in self.takencourses{
+                    for i in 0...(self.courses.count - 1){
+                        for j in 0...(self.courses[i].count - 1){
+                            let cidtext = try self.courses[i][j].children().array()[0].text()
+                            if(courseid == cidtext){
+                                takensectionhours[i] += Int(try self.courses[i][j].children().array()[5].text())!
+                            }
+                        }
+                    }
+                }
+                //print(takensectionhours)
+                for sec in 0...(self.sectionhours.count - 1){
+                    if(Int(try self.sectionhours[sec].array()[1].text()) == takensectionhours[sec]){
+                        self.finishedsections.append(true)
+                    }else{
+                        self.finishedsections.append(false)
+                    }
+                }
+                print(self.finishedsections)
+            } catch Exception.Error( let message) {
+                print(message)
+            } catch {
+                print("error")
+            }
             DispatchQueue.main.async {
                 self.table.reloadData()
                 self.infocv.reloadData()
                 self.pagecontrol.numberOfPages = Int(self.infocv.contentSize.width) / Int(self.infocv.frame.width) + 1
+                }
             }
-            print(self.average)
-        }
         operation2.addDependency(operation1)
         opQueue.addOperation(operation1)
         opQueue.addOperation(operation2)
@@ -390,7 +434,6 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                          self.courses[i].append(coursesforsectiion.array()[j])
                          }*/
                     }
-                    
                 } catch Exception.Error( let message) {
                     print(message)
                 } catch {
@@ -414,8 +457,15 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             if(error == nil){
                 do {
                     let doc: Document = try SwiftSoup.parse(String(decoding: data!, as: UTF8.self))
-                    self.average = try (doc.getElementById("student_transcript_form:j_idt63")?.text())!
-                    
+                    let tablesofsemester:Elements = try doc.getElementsByClass("ui-datatable-data ui-widget-content")
+                    for e in tablesofsemester{
+                        let coursesfortable:Elements = e.children()
+                        for c in coursesfortable{
+                            if(try c.child(c.children().count - 1).text() == "Pass"){
+                                self.takencourses.append(try c.child(0).text())
+                            }
+                        }
+                    }
                 } catch Exception.Error( let message) {
                     print(message)
                 } catch {

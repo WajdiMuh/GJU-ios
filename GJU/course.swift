@@ -13,4 +13,5 @@ class course: UICollectionViewCell {
     @IBOutlet weak var background: UIView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var id: UILabel!
+    @IBOutlet weak var correct: UIImageView!
 }
