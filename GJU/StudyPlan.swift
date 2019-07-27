@@ -20,6 +20,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     var takencourses:[String] = []
     var finishedsections:[Bool] = []
     let transition = mvcanimator()
+    var takensectionhours:[Int]? = nil
     @IBOutlet weak var searchcv: UISearchBar!
     @IBOutlet weak var table: UICollectionView!
     @IBOutlet weak var outscroll: UIScrollView!
@@ -93,7 +94,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                         print("error")
                     }
                 }
-            if(takencourses.contains(cell.id.text!)){
+            if(takencourses.contains(cell.name.text!)){
                 cell.correct.isHidden = false
             }else{
                 cell.correct.isHidden = true
@@ -173,15 +174,20 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     @IBAction func headerclick(_ sender: Any) {
         let sb:UIButton = (sender as! UIButton)
         let titleofsection:UILabel = sb.superview?.viewWithTag(100) as! UILabel
-        print(titleofsection.text)
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Sectioncontrol") as? Sectioncontroller
         do {
-            print(try sectionhours[sb.tag].array()[0].text())
-            print(try sectionhours[sb.tag].array()[1].text())
+            vc?.info = [titleofsection.text,try sectionhours[sb.tag].array()[0].text(),try sectionhours[sb.tag].array()[1].text(),String(self.takensectionhours![sb.tag])] as? [String]
         } catch Exception.Error( let message) {
             print(message)
         } catch {
             print("error")
         }
+        vc!.transitioningDelegate = self
+        //vc!.providesPresentationContextTransitionStyle = true
+        //vc!.definesPresentationContext = true
+        //vc?.modalTransitionStyle = .crossDissolve
+        vc?.modalPresentationStyle = .overCurrentContext
+        present(vc!, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -217,26 +223,28 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         }
         let operation2 = BlockOperation {
             do {
-                var takensectionhours:[Int] = Array(repeating: 0, count: self.sections!.count)
-                for courseid in self.takencourses{
+                self.takensectionhours = Array(repeating: 0, count: self.sections!.count)
+                for coursename in self.takencourses{
                     for i in 0...(self.courses.count - 1){
                         for j in 0...(self.courses[i].count - 1){
-                            let cidtext = try self.courses[i][j].children().array()[0].text()
-                            if(courseid == cidtext){
-                                takensectionhours[i] += Int(try self.courses[i][j].children().array()[5].text())!
+                            let cnametext = try self.courses[i][j].children().array()[1].text()
+                            //let cidtext = try self.courses[i][j].children().array()[0].text()
+                            if(coursename == cnametext){
+                                self.takensectionhours![i] += Int(try self.courses[i][j].children().array()[5].text())!
+                                //let potentiallab:String = cidtext + "0"
                             }
                         }
                     }
                 }
                 //print(takensectionhours)
                 for sec in 0...(self.sectionhours.count - 1){
-                    if(Int(try self.sectionhours[sec].array()[1].text()) == takensectionhours[sec]){
+                    if(Int(try self.sectionhours[sec].array()[1].text()) == self.takensectionhours![sec]){
                         self.finishedsections.append(true)
                     }else{
                         self.finishedsections.append(false)
                     }
                 }
-                print(self.finishedsections)
+                //print(self.finishedsections)
             } catch Exception.Error( let message) {
                 print(message)
             } catch {
@@ -462,7 +470,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                         let coursesfortable:Elements = e.children()
                         for c in coursesfortable{
                             if(try c.child(c.children().count - 1).text() == "Pass"){
-                                self.takencourses.append(try c.child(0).text())
+                                self.takencourses.append(try c.child(1).text())
                             }
                         }
                     }

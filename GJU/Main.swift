@@ -15,7 +15,6 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     @IBOutlet weak var studentidlabel: UILabel!
     @IBOutlet weak var majorlabel: UILabel!
     @IBOutlet weak var scroll: UIScrollView!
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
     @IBOutlet weak var loopbacground: UIImageView!
     @IBOutlet weak var backscroll: UIScrollView!
     @IBOutlet weak var pbg: UIView!
@@ -107,10 +106,7 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
                         self.namelabel.text = firstname.uppercased() + " " + lastname.uppercased()
                         self.studentidlabel.text = studentid
                         self.majorlabel.text = major
-                        for v in self.scroll.subviews[0].subviews{
-                            v.isHidden = false
-                        }
-                        self.indicator.isHidden = true
+                        self.dismiss(animated: true, completion: nil)
                     }
                 } catch Exception.Error( let message) {
                     print(message)

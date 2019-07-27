@@ -9,17 +9,20 @@
 import UIKit
 import SwiftSoup
 import Toast_Swift
+import Lottie
 import TextFieldEffects
-class Login: UIViewController,UITextFieldDelegate {
+class Login: UIViewController,UITextFieldDelegate,UIViewControllerTransitioningDelegate {
     @IBOutlet weak var hspass: UIButton!
     @IBOutlet weak var user: JiroTextField!
     @IBOutlet weak var pass: JiroTextField!
-    @IBOutlet weak var indicator: UIActivityIndicatorView!
+    @IBOutlet weak var indicator: AnimationView!
     @IBOutlet weak var autologin: UISwitch!
     @IBOutlet weak var background: UIImageView!
+    let transition = loadingpopanimator()
     let session = URLSession.shared
     var hiddenval:[String] = ["","","",""]
     var hiddenvalid:Bool = false
+    var firsttime:Bool = true
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -35,24 +38,9 @@ class Login: UIViewController,UITextFieldDelegate {
         gradient.endPoint = CGPoint(x: 1.15, y: 1.15)
         background.layer.addSublayer(gradient)
         autologin.setOn(UserDefaults.standard.bool(forKey: "autologin"), animated: false)
-        if(autologin.isOn){
-            indicator.isHidden = false
-            for v in self.view.subviews{
-                if(v != self.indicator){
-                    v.isHidden = true
-                }
-            }
-        }
         self.user.delegate = self
         self.pass.delegate = self
         getHiddenval(finished: {
-            DispatchQueue.main.async { // Make sure you're on the main thread here
-                if(self.autologin.isOn){
-                    self.user.text = UserDefaults.standard.string(forKey: "username")
-                    self.pass.text = UserDefaults.standard.string(forKey: "password")
-                    self.login(self)
-                }
-            }
         })
         // Do any additional setup after loading the view.
     }
@@ -85,20 +73,20 @@ class Login: UIViewController,UITextFieldDelegate {
         task.resume()
     }
     @IBAction func login(_ sender: Any) {
-        indicator.isHidden = false
-        for v in self.view.subviews{
-            if(v != self.indicator){
-                v.isHidden = true
+        let v = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "load") as? loadingViewController
+        v?.transitioningDelegate = self
+        v?.modalPresentationStyle = .overCurrentContext
+        self.present(v!, animated: true) {
+            if(self.hiddenvalid == false){
+                self.getHiddenval(finished: {
+                    self.loginprocess()
+                })
+                
+            }else{
+                self.loginprocess()
             }
         }
-        if(hiddenvalid == false){
-            getHiddenval(finished: {
-                self.loginprocess()
-            })
-
-        }else{
-            loginprocess()
-        }
+        
     }
     func loginprocess(){
         let url = URL(string: "https://mygju.gju.edu.jo/faces/index.xhtml")!
@@ -130,12 +118,7 @@ class Login: UIViewController,UITextFieldDelegate {
                         }
                     }else{
                         DispatchQueue.main.async { // Make sure you're on the main thread here
-                            self.indicator.isHidden = true
-                            for v in self.view.subviews{
-                                if(v != self.indicator && v != self.hspass){
-                                    v.isHidden = false
-                                }
-                            }
+                            self.dismiss(animated: true, completion: nil)
                             self.view.makeToast("Wrong Username/Password", duration: 1.5, position: .bottom)
                         }
                         let doc: Document = try SwiftSoup.parse(String(decoding: responseData!, as: UTF8.self))
@@ -150,12 +133,7 @@ class Login: UIViewController,UITextFieldDelegate {
                 }
             }else{
                 DispatchQueue.main.async { // Make sure you're on the main thread here
-                    self.indicator.isHidden = true
-                    for v in self.view.subviews{
-                        if(v != self.indicator && v != self.hspass){
-                            v.isHidden = false
-                        }
-                    }
+                    self.dismiss(animated: true, completion: nil)
                     self.view.makeToast("No Internet Connection", duration: 1.5, position: .bottom)
                     self.hiddenvalid = false
                 }
@@ -193,15 +171,6 @@ class Login: UIViewController,UITextFieldDelegate {
         super.viewWillDisappear(animated)
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.indicator.isHidden = true
-        for v in self.view.subviews{
-            if(v != self.indicator){
-                v.isHidden = false
-            }
-        }
-    }
     
     @IBAction func hspassclick(_ sender: Any) {
         pass.isSecureTextEntry.toggle()
@@ -211,6 +180,42 @@ class Login: UIViewController,UITextFieldDelegate {
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        if(firsttime == true){
+            indicator.play(fromProgress: 0.0, toProgress: 1.0, loopMode: .playOnce) { _ in
+                for v in self.view.subviews{
+                    if(v != self.indicator){
+                        v.isHidden = false
+                        UIView.transition(with: v, duration: 0.5, options: [.curveEaseInOut], animations: {
+                            v.alpha = 1.0
+                        }, completion: nil)
+                    }else{
+                        v.isHidden = true
+                        UIView.transition(with: v, duration: 0.5, options: [.curveEaseInOut], animations: {
+                            v.alpha = 0.0
+                        }, completion: { _ in
+                            if(self.autologin.isOn){
+                                self.user.text = UserDefaults.standard.string(forKey: "username")
+                                self.pass.text = UserDefaults.standard.string(forKey: "password")
+                                self.login(self)
+                            }
+                        })
+                    }
+                }
+                self.hspass.isHidden = true
+            }
+            firsttime = false
+        }
+    }
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = true
+        return transition
+    }
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = false
+        return transition
     }
 }
 
