@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftSoup
-class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,headercv,UICollectionViewDelegateFlowLayout{
+class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,headercv,UICollectionViewDelegateFlowLayout,UIViewControllerTransitioningDelegate{
     
     @IBOutlet weak var profileimage: UIImageView!
     @IBOutlet weak var namelabel: UILabel!
@@ -19,10 +19,10 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     @IBOutlet weak var backscroll: UIScrollView!
     @IBOutlet weak var pbg: UIView!
     @IBOutlet weak var bgheight: NSLayoutConstraint!
-    
     let tabledata:[[String]] = [["My Information"],["Study Plan","Course Sections","Schedules","Evaluations","Grades","Transcript"],["Account","Tuition Calculation","Fees"],["Registration"]]
     let sections:[String] = ["Profile","Academic Affairs","Financial Affairs","Registration"]
     var expanded:[Int] = []
+    let transition = loadingpopanimator()
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var cvheight: NSLayoutConstraint!
     override func viewDidLoad() {
@@ -202,8 +202,15 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if(indexPath.section == 1 && indexPath.row == 0){
-            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "StudyPlan") as? StudyPlan
-            self.navigationController?.pushViewController(vc!, animated: true)
+            let v = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "load") as? loadingViewController
+            v?.transitioningDelegate = self
+            v?.modalPresentationStyle = .overCurrentContext
+            self.present(v!, animated: true) {
+                 DispatchQueue.main.async {
+                    let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "StudyPlan") as? StudyPlan
+                    self.navigationController?.pushViewController(vc!, animated: true)
+                }
+            }
         }
         
     }
@@ -242,5 +249,13 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     }
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = true
+        return transition
+    }
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.presenting = false
+        return transition
     }
 }

@@ -19,7 +19,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginback" translatesAutoresizingMaskIntoConstraints="NO" id="5uw-Vu-hje">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="603.00000000000023"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="GJU LOGO" translatesAutoresizingMaskIntoConstraints="NO" id="a0U-j5-djb">
                                 <rect key="frame" x="0.0" y="30" width="375" height="120"/>
@@ -1181,7 +1181,7 @@
         <!--Loading View Controller-->
         <scene sceneID="ZiL-zv-0ib">
             <objects>
-                <viewController storyboardIdentifier="load" id="gNQ-MG-Eip" customClass="loadingViewController" customModule="GJU" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="load" useStoryboardIdentifierAsRestorationIdentifier="YES" id="gNQ-MG-Eip" customClass="loadingViewController" customModule="GJU" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="HsB-TX-YA6">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

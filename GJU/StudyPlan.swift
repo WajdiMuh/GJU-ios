@@ -254,6 +254,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                 self.table.reloadData()
                 self.infocv.reloadData()
                 self.pagecontrol.numberOfPages = Int(self.infocv.contentSize.width) / Int(self.infocv.frame.width) + 1
+                self.dismiss(animated: true, completion: nil)
                 }
             }
         operation2.addDependency(operation1)
@@ -388,13 +389,13 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         forPresented presented: UIViewController,
         presenting: UIViewController, source: UIViewController)
         -> UIViewControllerAnimatedTransitioning? {
-            transition.presenting = true
-            return transition
+                transition.presenting = true
+                return transition
     }
     func animationController(forDismissed dismissed: UIViewController)
         -> UIViewControllerAnimatedTransitioning? {
-            transition.presenting = false
-            return transition
+                transition.presenting = false
+                return transition
     }
     func getstudyplan(finished: @escaping () -> Void){
         let url = URL(string: "https://mygju.gju.edu.jo/faces/study_plan_gen/view_std_study_plan.xhtml")!

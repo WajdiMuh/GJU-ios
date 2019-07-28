@@ -185,6 +185,11 @@ class Login: UIViewController,UITextFieldDelegate,UIViewControllerTransitioningD
         super.viewDidAppear(true)
         if(firsttime == true){
             indicator.play(fromProgress: 0.0, toProgress: 1.0, loopMode: .playOnce) { _ in
+                if(self.autologin.isOn){
+                    self.user.text = UserDefaults.standard.string(forKey: "username")
+                    self.pass.text = UserDefaults.standard.string(forKey: "password")
+                    self.login(self)
+                }
                 for v in self.view.subviews{
                     if(v != self.indicator){
                         v.isHidden = false
@@ -195,13 +200,7 @@ class Login: UIViewController,UITextFieldDelegate,UIViewControllerTransitioningD
                         v.isHidden = true
                         UIView.transition(with: v, duration: 0.5, options: [.curveEaseInOut], animations: {
                             v.alpha = 0.0
-                        }, completion: { _ in
-                            if(self.autologin.isOn){
-                                self.user.text = UserDefaults.standard.string(forKey: "username")
-                                self.pass.text = UserDefaults.standard.string(forKey: "password")
-                                self.login(self)
-                            }
-                        })
+                        }, completion: nil)
                     }
                 }
                 self.hspass.isHidden = true
