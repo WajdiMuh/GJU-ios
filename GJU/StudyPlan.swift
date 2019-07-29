@@ -30,12 +30,17 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     @IBOutlet weak var outview: UIView!
     @IBOutlet weak var infocv: UICollectionView!
     @IBOutlet weak var pagecontrol: UIPageControl!
+    @IBOutlet weak var noresults: UILabel!
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if(collectionView == infocv){
             return 10
         }else{
             if(searchcv.text?.count == 0 || searchcv.text == nil){
-                return courses[section].count ;
+                if(try! courses[section][0].text() != "No courses found"){
+                    return courses[section].count ;
+                }else {
+                    return 0;
+                }
             }else{
                 return matches[section].count;
             }
@@ -122,6 +127,11 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         let sectionHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "title", for: indexPath) as! titleofcourses
           if(searchcv.text?.count == 0 || searchcv.text == nil){
                 do {
+                    if(try self.courses[indexPath.section][0].text() != "No courses found"){
+                        sectionHeaderView.nocourses.isHidden = true
+                    }else{
+                        sectionHeaderView.nocourses.isHidden = false
+                    }
                     sectionHeaderView.titlelabel.text = try sections?.array()[indexPath.section].text()
                     sectionHeaderView.sectionbutton.tag = indexPath.section
                 } catch Exception.Error( let message) {
@@ -153,41 +163,51 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if(collectionView == table){
-                let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Coursecontrol") as? Coursecontroller
-            if(searchcv.text?.count == 0 || searchcv.text == nil){
-                vc?.courseinfo = courses[indexPath.section][indexPath.row].children()
+            if(searchcv.isFirstResponder == false){
+                //self.view.endEditing(true)
+                    let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Coursecontrol") as? Coursecontroller
+                if(searchcv.text?.count == 0 || searchcv.text == nil){
+                    vc?.courseinfo = courses[indexPath.section][indexPath.row].children()
+                }else{
+                    vc?.courseinfo = matches[indexPath.section][indexPath.row].children()
+                }
+                //print(searchcv.isFirstResponder)
+                    //self.navigationController?.pushViewController(vc!, animated: true)
+                vc!.transitioningDelegate = self
+                //vc!.providesPresentationContextTransitionStyle = true
+                //vc!.definesPresentationContext = true
+                //vc?.modalTransitionStyle = .crossDissolve
+                vc?.modalPresentationStyle = .overCurrentContext
+                present(vc!, animated: true, completion: nil)
             }else{
-                vc?.courseinfo = matches[indexPath.section][indexPath.row].children()
+                self.view.endEditing(true)
             }
-                //self.navigationController?.pushViewController(vc!, animated: true)
-            vc!.transitioningDelegate = self
-            //vc!.providesPresentationContextTransitionStyle = true
-            //vc!.definesPresentationContext = true
-            //vc?.modalTransitionStyle = .crossDissolve
-            vc?.modalPresentationStyle = .overCurrentContext
-            present(vc!, animated: true, completion: nil)
         }
         /*let modalViewController = Coursecontroller()
         modalViewController.modalPresentationStyle = .overCurrentContext
         present(modalViewController, animated: true, completion: nil)*/
     }
     @IBAction func headerclick(_ sender: Any) {
-        let sb:UIButton = (sender as! UIButton)
-        let titleofsection:UILabel = sb.superview?.viewWithTag(100) as! UILabel
-        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Sectioncontrol") as? Sectioncontroller
-        do {
-            vc?.info = [titleofsection.text,try sectionhours[sb.tag].array()[0].text(),try sectionhours[sb.tag].array()[1].text(),String(self.takensectionhours![sb.tag])] as? [String]
-        } catch Exception.Error( let message) {
-            print(message)
-        } catch {
-            print("error")
+        if(searchcv.isFirstResponder == false){
+            let sb:UIButton = (sender as! UIButton)
+            let titleofsection:UILabel = sb.superview?.viewWithTag(100) as! UILabel
+            let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "Sectioncontrol") as? Sectioncontroller
+            do {
+                vc?.info = [titleofsection.text,try sectionhours[sb.tag].array()[0].text(),try sectionhours[sb.tag].array()[1].text(),String(self.takensectionhours![sb.tag])] as? [String]
+            } catch Exception.Error( let message) {
+                print(message)
+            } catch {
+                print("error")
+            }
+            vc!.transitioningDelegate = self
+            //vc!.providesPresentationContextTransitionStyle = true
+            //vc!.definesPresentationContext = true
+            //vc?.modalTransitionStyle = .crossDissolve
+            vc?.modalPresentationStyle = .overCurrentContext
+            present(vc!, animated: true, completion: nil)
+        }else{
+            self.view.endEditing(true)
         }
-        vc!.transitioningDelegate = self
-        //vc!.providesPresentationContextTransitionStyle = true
-        //vc!.definesPresentationContext = true
-        //vc?.modalTransitionStyle = .crossDissolve
-        vc?.modalPresentationStyle = .overCurrentContext
-        present(vc!, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -205,6 +225,12 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         up.direction = .up
         outview.addGestureRecognizer(up)
         table.panGestureRecognizer.require(toFail: down)
+        let bt = UITapGestureRecognizer(target: self, action: #selector(StudyPlan.tablebacktap
+            ))
+        bt.delegate = self
+        bt.numberOfTapsRequired = 1
+        table.backgroundView = UIView(frame:table.bounds)
+        table.backgroundView!.addGestureRecognizer(bt)
         let layout = table.collectionViewLayout as? UICollectionViewFlowLayout
         layout?.sectionHeadersPinToVisibleBounds = true
         self.navigationItem.title = "Study Plan"
@@ -227,11 +253,17 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                 for coursename in self.takencourses{
                     for i in 0...(self.courses.count - 1){
                         for j in 0...(self.courses[i].count - 1){
-                            let cnametext = try self.courses[i][j].children().array()[1].text()
-                            //let cidtext = try self.courses[i][j].children().array()[0].text()
-                            if(coursename == cnametext){
-                                self.takensectionhours![i] += Int(try self.courses[i][j].children().array()[5].text())!
-                                //let potentiallab:String = cidtext + "0"
+                           // print(String(i) + " " + String(j))
+                            if(try self.courses[i][j].text() != "No courses found"){
+                                //print(String(i) + " " + String(j))
+                                let cnametext = try self.courses[i][j].children().array()[1].text()
+                                //let cidtext = try self.courses[i][j].children().array()[0].text()
+                                if(coursename == cnametext){
+                                    self.takensectionhours![i] += Int(try self.courses[i][j].children().array()[5].text())!
+                                    //let potentiallab:String = cidtext + "0"
+                                }
+                            }else{
+                                break
                             }
                         }
                     }
@@ -269,9 +301,13 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             var matchesinsamesection:[Element] = []
             for j in 0...(self.courses[i].count - 1){
                 do {
-                    let name:String = try courses[i][j].child(1).text()
-                    if(name.contains(searchBar.text!)){
-                        matchesinsamesection.append(courses[i][j])
+                    if(try self.courses[i][j].text() != "No courses found"){
+                        let name:String = try courses[i][j].child(1).text()
+                        if(name.contains(searchBar.text!)){
+                            matchesinsamesection.append(courses[i][j])
+                        }
+                    }else{
+                        break
                     }
                 } catch Exception.Error( let message) {
                     print(message)
@@ -286,6 +322,15 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
             }
         }
         table.reloadData()
+        if(matches.isEmpty == false){
+            noresults.isHidden = true
+        }else{
+            if(searchText.isEmpty == true){
+                noresults.isHidden = true
+            }else{
+                noresults.isHidden = false
+            }
+        }
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
@@ -332,6 +377,9 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
         }, completion: nil)
         outscroll.setContentOffset(searchcv.superview!.frame.origin, animated: true)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+    @objc func tablebacktap(){
+        self.view.endEditing(true)
     }
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         if(wholebutton.isHidden == true){
@@ -470,7 +518,8 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                     for e in tablesofsemester{
                         let coursesfortable:Elements = e.children()
                         for c in coursesfortable{
-                            if(try c.child(c.children().count - 1).text() == "Pass"){
+                            let remark:String = try c.child(c.children().count - 1).text()
+                            if(remark == "Pass" || remark == "Pass-Repeated"){
                                 self.takencourses.append(try c.child(1).text())
                             }
                         }

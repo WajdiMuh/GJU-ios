@@ -12,4 +12,5 @@ class titleofcourses: UICollectionReusableView {
     @IBOutlet weak var titlelabel: UILabel!
     @IBOutlet weak var sectionbutton: UIButton!
     @IBOutlet weak var correct: UIImageView!
+    @IBOutlet weak var nocourses: UIView!
 }
