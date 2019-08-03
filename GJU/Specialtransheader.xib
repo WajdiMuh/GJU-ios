@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="specialheader" id="DOJ-dR-nOl">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uar-kq-5Yt">
+                    <rect key="frame" x="50" y="-30" width="314" height="60"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="60" id="dub-Ku-waI"/>
+                    </constraints>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                            <integer key="value" value="24"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Exempted Courses" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4eO-Ib-bgL">
+                    <rect key="frame" x="127" y="3" width="160.5" height="23"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="0.95294117647058818" green="0.50196078431372548" blue="0.074509803921568626" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="4eO-Ib-bgL" firstAttribute="centerX" secondItem="DOJ-dR-nOl" secondAttribute="centerX" id="0Eo-d2-js9"/>
+                <constraint firstAttribute="trailing" secondItem="uar-kq-5Yt" secondAttribute="trailing" constant="50" id="BrV-Jq-w6y"/>
+                <constraint firstItem="uar-kq-5Yt" firstAttribute="top" secondItem="DOJ-dR-nOl" secondAttribute="top" constant="-30" id="Lmw-MI-bQJ"/>
+                <constraint firstItem="4eO-Ib-bgL" firstAttribute="bottom" secondItem="uar-kq-5Yt" secondAttribute="bottom" constant="-4" id="YSV-U0-N2T"/>
+                <constraint firstItem="uar-kq-5Yt" firstAttribute="leading" secondItem="DOJ-dR-nOl" secondAttribute="leading" constant="50" id="zkj-s9-Ek3"/>
+            </constraints>
+            <point key="canvasLocation" x="321.73913043478262" y="102.45535714285714"/>
+        </collectionReusableView>
+    </objects>
+</document>

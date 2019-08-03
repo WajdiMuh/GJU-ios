@@ -146,6 +146,7 @@ class Login: UIViewController,UITextFieldDelegate,UIViewControllerTransitioningD
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         self.navigationController?.navigationBar.barStyle = .black
         self.hspass.isHidden = true
+        autologin.setOn(UserDefaults.standard.bool(forKey: "autologin"), animated: false)
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == user {

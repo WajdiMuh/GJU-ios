@@ -8,17 +8,15 @@
 
 import UIKit
 import SwiftSoup
-class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,headercv,UICollectionViewDelegateFlowLayout,UIViewControllerTransitioningDelegate{
+class Main: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource,headercv,UICollectionViewDelegateFlowLayout,UIViewControllerTransitioningDelegate{
     
     @IBOutlet weak var profileimage: UIImageView!
     @IBOutlet weak var namelabel: UILabel!
     @IBOutlet weak var studentidlabel: UILabel!
     @IBOutlet weak var majorlabel: UILabel!
     @IBOutlet weak var scroll: UIScrollView!
-    @IBOutlet weak var loopbacground: UIImageView!
-    @IBOutlet weak var backscroll: UIScrollView!
     @IBOutlet weak var pbg: UIView!
-    @IBOutlet weak var bgheight: NSLayoutConstraint!
+    @IBOutlet weak var loopbg: UIImageView!
     let tabledata:[[String]] = [["My Information"],["Study Plan","Course Sections","Schedules","Evaluations","Grades","Transcript"],["Account","Tuition Calculation","Fees"],["Registration"]]
     let sections:[String] = ["Profile","Academic Affairs","Financial Affairs","Registration"]
     var expanded:[Int] = []
@@ -27,7 +25,6 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     @IBOutlet weak var cvheight: NSLayoutConstraint!
     override func viewDidLoad() {
         super.viewDidLoad()
-        scroll.delegate = self
         self.navigationItem.hidesBackButton = true;
         self.navigationItem.title = "Main"
         // Do any additional setup after loading the view.
@@ -43,51 +40,9 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
         pbg.layer.masksToBounds = false
         profileimage.layer.masksToBounds = true
         load()
+        applyMotionEffect(toView: loopbg, magnitude: 40)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let foregroundScrollviewHeight = scroll.contentSize.height - scroll.bounds.height
-        //print(foregroundScrollviewHeight)
-        let percentageScroll = scroll.contentOffset.y / foregroundScrollviewHeight
-        var backgroundScrollViewHeight:CGFloat = 5//backscroll.contentSize.height - (backscroll.bounds.height)
-        switch Int(scroll.contentSize.height) {
-        case 556:
-            backgroundScrollViewHeight = 5
-            break
-        case 596:
-            backgroundScrollViewHeight = 15
-            break
-        case 636:
-            backgroundScrollViewHeight = 50
-            break
-        case 716:
-            backgroundScrollViewHeight = 100
-            break
-        case 756:
-            backgroundScrollViewHeight = 120
-            break
-        case 836:
-            backgroundScrollViewHeight = 120
-            break
-        case 876:
-            backgroundScrollViewHeight = 130
-            break
-        case 916:
-            backgroundScrollViewHeight = 150
-            break
-        case 956:
-            backgroundScrollViewHeight = 170
-            break
-        case 996:
-            backgroundScrollViewHeight = 190
-            break
-        default:
-            backgroundScrollViewHeight = 5
-            break
-        }
-        backscroll.contentOffset = CGPoint(x: 0, y: backgroundScrollViewHeight * percentageScroll)
-
-    }
     func load(){
         let url = URL(string: "https://mygju.gju.edu.jo/faces/student_view/profile/student_profile.xhtml")!
         let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
@@ -211,6 +166,16 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
                     self.navigationController?.pushViewController(vc!, animated: true)
                 }
             }
+        }else if(indexPath.section == 1 && indexPath.row == 5){
+            let v = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "load") as? loadingViewController
+            v?.transitioningDelegate = self
+            v?.modalPresentationStyle = .overCurrentContext
+            self.present(v!, animated: true) {
+                DispatchQueue.main.async {
+                    let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "transcript") as? TranscriptViewController
+                    self.navigationController?.pushViewController(vc!, animated: true)
+                }
+            }
         }
         
     }
@@ -257,5 +222,19 @@ class Main: UIViewController,UIScrollViewDelegate,UICollectionViewDelegate,UICol
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         transition.presenting = false
         return transition
+    }
+    func applyMotionEffect (toView view:UIView, magnitude:Float) {
+        let xMotion = UIInterpolatingMotionEffect(keyPath: "center.x", type: .tiltAlongHorizontalAxis)
+        xMotion.minimumRelativeValue = -magnitude
+        xMotion.maximumRelativeValue = magnitude
+        
+        let yMotion = UIInterpolatingMotionEffect(keyPath: "center.y", type: .tiltAlongVerticalAxis)
+        yMotion.minimumRelativeValue = -magnitude
+        yMotion.maximumRelativeValue = magnitude
+        
+        let group = UIMotionEffectGroup()
+        group.motionEffects = [xMotion, yMotion]
+        
+        view.addMotionEffect(group)
     }
 }
