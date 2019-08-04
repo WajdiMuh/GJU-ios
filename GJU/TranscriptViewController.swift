@@ -11,6 +11,7 @@ import SwiftSoup
 class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
     var semesters:[String] = ["Exempted Courses"]
     var courses:[[Element]] = []
+    var extrainfo:[[String]] = []
     @IBOutlet weak var average: UILabel!
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var cv: UICollectionView!
@@ -18,6 +19,7 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         cv.register(UINib.init(nibName: "Specialtransheader", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "specialheader")
+        cv.register(UINib.init(nibName: "Specialtransfooter", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "specialfooter")
         self.navigationItem.title = "Transcript"
         let url = URL(string: "https://mygju.gju.edu.jo/faces/admin_view/student_affairs/student_details/student_academic_progress/transcript/student_transcript.xhtml")!
         let task = URLSession.shared.dataTask(with: url, completionHandler: { data, response, error in
@@ -33,14 +35,20 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
                         let coursesfortable:Elements = e.children()
                         self.courses.append(coursesfortable.array())
                     }
-                    let avg:String = try (doc.getElementById("student_transcript_form:j_idt77")?.text())!
-                    let rate:String = try (doc.getElementById("student_transcript_form:j_idt79")?.text())!
-                    print(rate)
-                    for i in 0...(self.semesters.count - 1){
-                        print(self.semesters[i])
-                        for co in self.courses[i]{
-                            print(try co.child(1).text())
+                    let avg:String = try ((doc.getElementsContainingOwnText("Cumulative Average :").first()?.parent()?.nextElementSibling()?.child(0).text()))!
+                    let rate:String = try (doc.getElementsContainingOwnText("Rating :").first()?.parent()?.nextElementSibling()?.child(0).text())!
+                    let specialfoot:String = try (doc.getElementsContainingOwnText("Total Exempted").first()?.nextElementSibling()?.text())!
+                    self.extrainfo.append([specialfoot])
+                    let localextra:Elements = try doc.getElementsByClass("transcriptPanelGridClass")
+                    for i in 0...(self.semesters.count - 2){
+                        var semesterinfo:[String] = []
+                        for j in 0...1{
+                            for k in 1...4{
+                                semesterinfo.append(try localextra.get(2 * i).child(0).child(j).child(k).child(0).child(1).text())
+                            }
                         }
+                        semesterinfo.append(try localextra.get((2 * i)+1).child(0).child(0).child(0).child(0).child(1).text())
+                        self.extrainfo.append(semesterinfo)
                     }
                     DispatchQueue.main.async {
                         self.average.text = avg
@@ -119,16 +127,37 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
                 return sectionHeaderView
             }
         }else{
-            let sectionFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "transfooter", for: indexPath) as! transcriptfooter
-            return sectionFooterView
+            if(indexPath.section == 0){
+                let sectionFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "specialfooter", for: indexPath) as! specialtransfootercode
+                sectionFooterView.chours.text = "Total Exempted Credit Hours : " + extrainfo[0][0]
+                sectionFooterView.setupshadow()
+                return sectionFooterView
+            }else{
+                let sectionFooterView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "transfooter", for: indexPath) as! transcriptfooter
+                sectionFooterView.rhl.text = "Registered Hours : " + extrainfo[indexPath.section][0]
+                sectionFooterView.phl.text = "Passed Hours : " + extrainfo[indexPath.section][1]
+                sectionFooterView.al.text = "Average : " + extrainfo[indexPath.section][2]
+                sectionFooterView.gpal.text = "GPA Hours : " + extrainfo[indexPath.section][3]
+                sectionFooterView.rhr.text = "Registered Hours : " + extrainfo[indexPath.section][4]
+                sectionFooterView.phr.text = "Passed Hours : " + extrainfo[indexPath.section][5]
+                sectionFooterView.ar.text = "Average : " + extrainfo[indexPath.section][6]
+                sectionFooterView.gpar.text = "GPA Hours : " + extrainfo[indexPath.section][7]
+                sectionFooterView.tph.text = "Total Passed Hours : " + extrainfo[indexPath.section][8]
+                sectionFooterView.setupshadow()
+                return sectionFooterView
+            }
         }
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cv.frame.width, height: 50)
     }
-    /*func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-     
-    }*/
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if(section == 0){
+            return CGSize(width: cv.frame.width, height: 100)
+        }else{
+            return CGSize(width: cv.frame.width, height: 204)
+        }
+    }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if(section == 0){
             return CGSize(width: cv.frame.width, height: 60)

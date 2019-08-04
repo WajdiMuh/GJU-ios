@@ -49,9 +49,9 @@ class Main: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource
             if(error == nil){
                 do {
                     let doc: Document = try SwiftSoup.parse(String(decoding: data!, as: UTF8.self))
-                    let image:Element = try doc.getElementById("form:j_idt51")!
-                    let firstname:String = try doc.getElementById("form:j_idt57")!.text()
-                    let lastname:String = try doc.getElementById("form:j_idt63")!.text()
+                    let image:Element = try doc.getElementsByAttributeValue("style", "width:180px;height: 230px;").first()!
+                    let firstname:String = try doc.getElementById("form:nameEn")!.child(0).text()
+                    let lastname:String = try doc.getElementById("form:nameEn")!.child(6).text()
                     let studentid:String = try doc.getElementById("form:student_id")!.text()
                     let major:String = try doc.getElementById("form:major")!.text()
                     let url = URL(string: ("https://mygju.gju.edu.jo" + (image.getAttributes()?.get(key: "src"))!))

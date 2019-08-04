@@ -467,7 +467,7 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                     self.infodata[6] = self.infodata[6] + status
                     let program:String = try (doc.getElementById("form:program")?.text())!
                     self.infodata[7] = self.infodata[7] + program
-                    let spch:String = try (doc.getElementById("form:j_idt61")?.parent()?.nextElementSibling()?.child(0).text())!
+                    let spch:String = try (doc.getElementsContainingOwnText("Study Plan Credit Hours:").first()!.parent()?.nextElementSibling()?.child(0).text())!
                     self.infodata[8] = self.infodata[8] + spch
                     let active:String = try (doc.getElementById("form:inactive")?.text())!
                     self.infodata[9] = self.infodata[9] + active
