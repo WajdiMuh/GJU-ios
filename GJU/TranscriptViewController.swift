@@ -8,10 +8,11 @@
 
 import UIKit
 import SwiftSoup
-class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout {
+class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIViewControllerTransitioningDelegate {
     var semesters:[String] = ["Exempted Courses"]
     var courses:[[Element]] = []
     var extrainfo:[[String]] = []
+    let transition = mvcanimator()
     @IBOutlet weak var average: UILabel!
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var cv: UICollectionView!
@@ -168,7 +169,23 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
     @IBAction func showchart(_ sender: Any) {
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "transcoursepop") as? TranscoursepopViewController
+        vc?.courseinfo = courses[indexPath.section][indexPath.row].children()
+        vc!.transitioningDelegate = self
+        vc?.modalPresentationStyle = .overCurrentContext
+        present(vc!, animated: true, completion: nil)
+    }
+    func animationController(
+        forPresented presented: UIViewController,
+        presenting: UIViewController, source: UIViewController)
+        -> UIViewControllerAnimatedTransitioning? {
+            transition.presenting = true
+            return transition
+    }
+    func animationController(forDismissed dismissed: UIViewController)
+        -> UIViewControllerAnimatedTransitioning? {
+            transition.presenting = false
+            return transition
     }
     /*
     // MARK: - Navigation

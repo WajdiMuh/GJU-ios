@@ -11,8 +11,8 @@ import UIKit
 class gjub: SimpleButton {
     override func configureButtonStyles() {
         super.configureButtonStyles()
-        setBackgroundColor(UIColor(red: 247/255, green: 169/255, blue: 2/255, alpha: 1.0), for: .normal)
-        setBackgroundColor(UIColor(red: 202/255, green: 139/255, blue: 2/255, alpha: 1.0), for: .highlighted)
+        //setBackgroundColor(UIColor(red: 247/255, green: 169/255, blue: 2/255, alpha: 1.0), for: .normal)
+        //setBackgroundColor(UIColor(red: 202/255, green: 139/255, blue: 2/255, alpha: 1.0), for: .highlighted)
         setCornerRadius(0.188 * min(frame.width, frame.height))
         setScale(0.98, for: .highlighted)
         setShadowOpacity(0.8)
@@ -20,5 +20,13 @@ class gjub: SimpleButton {
         setShadowOffset(CGSize(width: 0.0, height: 0.0))
         setShadowRadius(8.0)
         setTitleColor(UIColor.white, for: .normal)
+    }
+    @IBInspectable var color: UIColor {
+        get {
+            return UIColor.init(cgColor: self.layer.backgroundColor!)
+        }
+        set {
+           setBackgroundColor(newValue ,for: .normal)
+        }
     }
 }

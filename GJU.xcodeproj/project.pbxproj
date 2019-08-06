@@ -11,6 +11,7 @@
 		0D30F8A922F4617000469001 /* transcriptheader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30F8A822F4617000469001 /* transcriptheader.swift */; };
 		0D30F8AB22F4618600469001 /* transcriptfooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30F8AA22F4618600469001 /* transcriptfooter.swift */; };
 		0D30F8AD22F4619D00469001 /* transcriptcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30F8AC22F4619D00469001 /* transcriptcell.swift */; };
+		0D781A1222FA11B300A0B9F0 /* TranscoursepopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D781A1122FA11B300A0B9F0 /* TranscoursepopViewController.swift */; };
 		0D8A77ED22D8F97B0069F298 /* infocell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8A77EC22D8F97B0069F298 /* infocell.swift */; };
 		0D8C640822CD827400C65F3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8C640722CD827400C65F3E /* Assets.xcassets */; };
 		0D93A33122D11B710016A2B6 /* OutLineLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D93A33022D11B710016A2B6 /* OutLineLabel.swift */; };
@@ -69,6 +70,7 @@
 		0D30F8A822F4617000469001 /* transcriptheader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = transcriptheader.swift; sourceTree = "<group>"; };
 		0D30F8AA22F4618600469001 /* transcriptfooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = transcriptfooter.swift; sourceTree = "<group>"; };
 		0D30F8AC22F4619D00469001 /* transcriptcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = transcriptcell.swift; sourceTree = "<group>"; };
+		0D781A1122FA11B300A0B9F0 /* TranscoursepopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscoursepopViewController.swift; sourceTree = "<group>"; };
 		0D8A77EC22D8F97B0069F298 /* infocell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infocell.swift; sourceTree = "<group>"; };
 		0D8C640722CD827400C65F3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D93A33022D11B710016A2B6 /* OutLineLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutLineLabel.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				0DA27AC622F4DEF000307905 /* Specialtransheader.xib */,
 				0DA55C9E22F58A2200E86DC9 /* Specialtransfooter.xib */,
 				0DA55CA022F58F7200E86DC9 /* specialtransfootercode.swift */,
+				0D781A1122FA11B300A0B9F0 /* TranscoursepopViewController.swift */,
 				0DA8479022CEBC0900CBAF5E /* eye.png */,
 				0D95256722CA3ED700A8585C /* Main.storyboard */,
 				0D95256C22CA3ED900A8585C /* LaunchScreen.storyboard */,
@@ -490,6 +493,7 @@
 				0DA8479322CEC44D00CBAF5E /* SimpleButton.swift in Sources */,
 				0D30F8A922F4617000469001 /* transcriptheader.swift in Sources */,
 				0D93A33122D11B710016A2B6 /* OutLineLabel.swift in Sources */,
+				0D781A1222FA11B300A0B9F0 /* TranscoursepopViewController.swift in Sources */,
 				0DA8479722CEC4DE00CBAF5E /* SimpleButtonStateChangeValue.swift in Sources */,
 				0D95256622CA3ED700A8585C /* Login.swift in Sources */,
 				0DAB3C9822F0B95100118203 /* TranscriptViewController.swift in Sources */,
