@@ -18,6 +18,8 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var cv: UICollectionView!
     @IBOutlet weak var cvheight: NSLayoutConstraint!
+    @IBOutlet weak var maininfoheight: NSLayoutConstraint!
+    @IBOutlet weak var scb: gjub!
     override func viewDidLoad() {
         super.viewDidLoad()
         cv.register(UINib.init(nibName: "Specialtransheader", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "specialheader")
@@ -56,8 +58,11 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
                         semesterinfo.append(try localextra.get((2 * i)+1).child(0).child(0).child(0).child(0).child(1).text())
                         self.extrainfo.append(semesterinfo)
                     }
-                    print(self.chartarray)
                     DispatchQueue.main.async {
+                        if(self.chartarray.count <= 1){
+                            self.maininfoheight.constant = 201.5
+                            self.scb.isHidden = true
+                        }
                         self.average.text = avg
                         self.rating.text = rate
                         self.cv.reloadData()

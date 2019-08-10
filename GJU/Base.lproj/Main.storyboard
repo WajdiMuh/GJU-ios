@@ -806,7 +806,9 @@
                         <outlet property="average" destination="ecE-x2-LjF" id="yBU-Cy-txA"/>
                         <outlet property="cv" destination="s7x-W9-qob" id="QBa-7k-r3g"/>
                         <outlet property="cvheight" destination="cx0-o0-0pf" id="0Vt-oB-YnU"/>
+                        <outlet property="maininfoheight" destination="3dU-fe-uaX" id="PwU-YW-cVe"/>
                         <outlet property="rating" destination="pj7-Gk-ukB" id="AQt-DG-KXw"/>
+                        <outlet property="scb" destination="EDR-pd-t5F" id="DQM-LZ-3X1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0na-Sv-HRh" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1887,8 +1889,105 @@
                                                     <constraint firstItem="h4g-1K-DI1" firstAttribute="centerX" secondItem="wob-yb-8AP" secondAttribute="centerX" id="dDz-V1-WYt"/>
                                                 </constraints>
                                             </view>
-                                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JhK-iJ-xCk" customClass="BarChartView" customModule="Charts">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JhK-iJ-xCk">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="371"/>
+                                                <subviews>
+                                                    <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="628-fr-XiJ" customClass="BarChartView" customModule="Charts">
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="241.5"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
+                                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="LqE-Eb-Axv">
+                                                        <rect key="frame" x="0.0" y="241.5" width="335" height="129.5"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="0.0" id="N0D-tS-3Wi">
+                                                            <size key="itemSize" width="335" height="45"/>
+                                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                                            <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
+                                                        </collectionViewFlowLayout>
+                                                        <cells>
+                                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="chartinfocell" id="Edg-eI-swd" customClass="chartinfocell" customModule="GJU" customModuleProvider="target">
+                                                                <rect key="frame" x="0.0" y="10" width="335" height="45"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="335" height="45"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                    <subviews>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GZo-M3-fae">
+                                                                            <rect key="frame" x="22.5" y="12.5" width="312.5" height="20"/>
+                                                                            <color key="backgroundColor" red="0.95294117649999999" green="0.50196078430000002" blue="0.074509803920000006" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="20" id="AWe-NE-85V"/>
+                                                                            </constraints>
+                                                                            <userDefinedRuntimeAttributes>
+                                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                    <integer key="value" value="10"/>
+                                                                                </userDefinedRuntimeAttribute>
+                                                                            </userDefinedRuntimeAttributes>
+                                                                        </view>
+                                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T7q-IM-G1b">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
+                                                                            <color key="backgroundColor" red="0.83921568627450982" green="0.38039215686274508" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="height" constant="45" id="CYf-JB-OgS"/>
+                                                                                <constraint firstAttribute="width" constant="45" id="lWN-fy-y6a"/>
+                                                                            </constraints>
+                                                                            <userDefinedRuntimeAttributes>
+                                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                                    <real key="value" value="22.5"/>
+                                                                                </userDefinedRuntimeAttribute>
+                                                                            </userDefinedRuntimeAttributes>
+                                                                        </view>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cN0-Qh-0Jk">
+                                                                            <rect key="frame" x="45" y="13.5" width="290" height="18"/>
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fmH-2y-9kV">
+                                                                            <rect key="frame" x="18.5" y="12" width="8" height="21"/>
+                                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
+                                                                    </subviews>
+                                                                </view>
+                                                                <constraints>
+                                                                    <constraint firstItem="GZo-M3-fae" firstAttribute="leading" secondItem="Edg-eI-swd" secondAttribute="leading" constant="22.5" id="8zS-Ws-erz"/>
+                                                                    <constraint firstItem="T7q-IM-G1b" firstAttribute="centerY" secondItem="GZo-M3-fae" secondAttribute="centerY" id="F4s-dw-zGk"/>
+                                                                    <constraint firstItem="fmH-2y-9kV" firstAttribute="centerY" secondItem="T7q-IM-G1b" secondAttribute="centerY" id="HRm-MV-Igz"/>
+                                                                    <constraint firstItem="T7q-IM-G1b" firstAttribute="centerX" secondItem="GZo-M3-fae" secondAttribute="leading" id="PHt-1Y-IrA"/>
+                                                                    <constraint firstItem="cN0-Qh-0Jk" firstAttribute="leading" secondItem="T7q-IM-G1b" secondAttribute="trailing" id="QAH-oj-4wa"/>
+                                                                    <constraint firstItem="fmH-2y-9kV" firstAttribute="centerX" secondItem="T7q-IM-G1b" secondAttribute="centerX" id="UEZ-8V-Sg3"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="GZo-M3-fae" secondAttribute="trailing" id="VO6-yb-BIo"/>
+                                                                    <constraint firstItem="GZo-M3-fae" firstAttribute="centerY" secondItem="Edg-eI-swd" secondAttribute="centerY" id="Zi0-FB-g2q"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="cN0-Qh-0Jk" secondAttribute="trailing" id="hQQ-3s-wRE"/>
+                                                                    <constraint firstItem="cN0-Qh-0Jk" firstAttribute="centerY" secondItem="Edg-eI-swd" secondAttribute="centerY" id="wHe-MS-6RY"/>
+                                                                </constraints>
+                                                                <connections>
+                                                                    <outlet property="background" destination="GZo-M3-fae" id="Z3V-Rd-ZW2"/>
+                                                                    <outlet property="circle" destination="T7q-IM-G1b" id="fSj-og-I0z"/>
+                                                                    <outlet property="count" destination="fmH-2y-9kV" id="1cL-va-5pV"/>
+                                                                    <outlet property="name" destination="cN0-Qh-0Jk" id="82C-Ep-kDd"/>
+                                                                </connections>
+                                                            </collectionViewCell>
+                                                        </cells>
+                                                        <connections>
+                                                            <outlet property="dataSource" destination="KWw-y9-0Ro" id="KHQ-eu-T5T"/>
+                                                            <outlet property="delegate" destination="KWw-y9-0Ro" id="x7A-jp-5SK"/>
+                                                        </connections>
+                                                    </collectionView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="LqE-Eb-Axv" secondAttribute="trailing" id="Dmc-vP-2Ec"/>
+                                                    <constraint firstItem="LqE-Eb-Axv" firstAttribute="top" secondItem="628-fr-XiJ" secondAttribute="bottom" id="RAo-M7-Ua9"/>
+                                                    <constraint firstItem="628-fr-XiJ" firstAttribute="top" secondItem="JhK-iJ-xCk" secondAttribute="top" id="Uus-rn-Vmw"/>
+                                                    <constraint firstItem="628-fr-XiJ" firstAttribute="height" secondItem="JhK-iJ-xCk" secondAttribute="height" multiplier="0.65" id="VAv-M8-WWo"/>
+                                                    <constraint firstItem="LqE-Eb-Axv" firstAttribute="leading" secondItem="JhK-iJ-xCk" secondAttribute="leading" id="ogm-EZ-NMM"/>
+                                                    <constraint firstAttribute="trailing" secondItem="628-fr-XiJ" secondAttribute="trailing" id="pdp-sN-UNB"/>
+                                                    <constraint firstAttribute="bottom" secondItem="LqE-Eb-Axv" secondAttribute="bottom" id="qta-SG-gqe"/>
+                                                    <constraint firstItem="628-fr-XiJ" firstAttribute="leading" secondItem="JhK-iJ-xCk" secondAttribute="leading" id="sOB-0z-3Ze"/>
+                                                </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.59999999999999998" alpha="1" colorSpace="calibratedWhite"/>
@@ -1939,12 +2038,13 @@
                     </view>
                     <connections>
                         <outlet property="background" destination="7xn-Mo-Nbn" id="dKZ-GD-Mk3"/>
-                        <outlet property="bchart" destination="JhK-iJ-xCk" id="HIT-67-IoD"/>
+                        <outlet property="bchart" destination="628-fr-XiJ" id="2bL-te-jiq"/>
+                        <outlet property="cv" destination="LqE-Eb-Axv" id="4tW-Ca-XYK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="STj-m5-Gzs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2662" y="860"/>
+            <point key="canvasLocation" x="2661.5999999999999" y="859.52023988005999"/>
         </scene>
     </scenes>
     <resources>

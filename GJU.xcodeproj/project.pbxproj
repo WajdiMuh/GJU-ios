@@ -34,6 +34,7 @@
 		0DA8479922CEC5DB00CBAF5E /* SimpleButtonControlState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA8479822CEC5DB00CBAF5E /* SimpleButtonControlState.swift */; };
 		0DA8479E22CEC6F600CBAF5E /* gjub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA8479D22CEC6F600CBAF5E /* gjub.swift */; };
 		0DAB3C9822F0B95100118203 /* TranscriptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DAB3C9722F0B95100118203 /* TranscriptViewController.swift */; };
+		0DB07C2C22FF18C7009FFA35 /* chartinfocell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DB07C2B22FF18C7009FFA35 /* chartinfocell.swift */; };
 		0DD0D82B22CC329800207659 /* Coursecontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DD0D82A22CC329800207659 /* Coursecontroller.swift */; };
 		0DDCD38D22ECBC8100477433 /* loadingpopanimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDCD38C22ECBC8100477433 /* loadingpopanimator.swift */; };
 		0DEFA21322FE435E006B9363 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEFA21222FE435E006B9363 /* ChartViewController.swift */; };
@@ -98,6 +99,7 @@
 		0DA8479822CEC5DB00CBAF5E /* SimpleButtonControlState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleButtonControlState.swift; sourceTree = "<group>"; };
 		0DA8479D22CEC6F600CBAF5E /* gjub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gjub.swift; sourceTree = "<group>"; };
 		0DAB3C9722F0B95100118203 /* TranscriptViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscriptViewController.swift; sourceTree = "<group>"; };
+		0DB07C2B22FF18C7009FFA35 /* chartinfocell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chartinfocell.swift; sourceTree = "<group>"; };
 		0DD0D82A22CC329800207659 /* Coursecontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coursecontroller.swift; sourceTree = "<group>"; };
 		0DDCD38C22ECBC8100477433 /* loadingpopanimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadingpopanimator.swift; sourceTree = "<group>"; };
 		0DEFA21222FE435E006B9363 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				0DA55CA022F58F7200E86DC9 /* specialtransfootercode.swift */,
 				0D781A1122FA11B300A0B9F0 /* TranscoursepopViewController.swift */,
 				0DEFA21222FE435E006B9363 /* ChartViewController.swift */,
+				0DB07C2B22FF18C7009FFA35 /* chartinfocell.swift */,
 			);
 			path = Transcript;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				0D30F8A922F4617000469001 /* transcriptheader.swift in Sources */,
 				0DA8479722CEC4DE00CBAF5E /* SimpleButtonStateChangeValue.swift in Sources */,
 				0D95256622CA3ED700A8585C /* Login.swift in Sources */,
+				0DB07C2C22FF18C7009FFA35 /* chartinfocell.swift in Sources */,
 				0DAB3C9822F0B95100118203 /* TranscriptViewController.swift in Sources */,
 				0DA56D1F22CAEA8B003ACD2A /* course.swift in Sources */,
 				0DA56D1D22CAE151003ACD2A /* StudyPlan.swift in Sources */,
