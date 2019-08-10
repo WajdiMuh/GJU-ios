@@ -1,7 +1,7 @@
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SwiftSoup" "${PODS_CONFIGURATION_BUILD_DIR}/TextFieldEffects" "${PODS_CONFIGURATION_BUILD_DIR}/Toast-Swift" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Charts" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftSoup" "${PODS_CONFIGURATION_BUILD_DIR}/TextFieldEffects" "${PODS_CONFIGURATION_BUILD_DIR}/Toast-Swift" "${PODS_CONFIGURATION_BUILD_DIR}/ValueAnimator" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SwiftSoup/SwiftSoup.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TextFieldEffects/TextFieldEffects.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Toast-Swift/Toast_Swift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/Lottie.framework/Headers"
-OTHER_LDFLAGS = $(inherited) -framework "CoreGraphics" -framework "Lottie" -framework "QuartzCore" -framework "SwiftSoup" -framework "TextFieldEffects" -framework "Toast_Swift" -framework "UIKit"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Charts/Charts.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/SwiftSoup/SwiftSoup.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TextFieldEffects/TextFieldEffects.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Toast-Swift/Toast_Swift.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/ValueAnimator/ValueAnimator.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/lottie-ios/Lottie.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "Charts" -framework "CoreGraphics" -framework "Lottie" -framework "QuartzCore" -framework "SwiftSoup" -framework "TextFieldEffects" -framework "Toast_Swift" -framework "UIKit" -framework "ValueAnimator"
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
 PODS_PODFILE_DIR_PATH = ${SRCROOT}/.

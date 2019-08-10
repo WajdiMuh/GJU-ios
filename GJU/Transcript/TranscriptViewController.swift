@@ -12,6 +12,7 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
     var semesters:[String] = ["Exempted Courses"]
     var courses:[[Element]] = []
     var extrainfo:[[String]] = []
+    var chartarray:[Double] = []
     let transition = mvcanimator()
     @IBOutlet weak var average: UILabel!
     @IBOutlet weak var rating: UILabel!
@@ -45,12 +46,17 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
                         var semesterinfo:[String] = []
                         for j in 0...1{
                             for k in 1...4{
-                                semesterinfo.append(try localextra.get(2 * i).child(0).child(j).child(k).child(0).child(1).text())
+                                let info:String = try localextra.get(2 * i).child(0).child(j).child(k).child(0).child(1).text()
+                                semesterinfo.append(info)
+                                if(j == 0 && k == 3){
+                                    self.chartarray.append(Double(info)!)
+                                }
                             }
                         }
                         semesterinfo.append(try localextra.get((2 * i)+1).child(0).child(0).child(0).child(0).child(1).text())
                         self.extrainfo.append(semesterinfo)
                     }
+                    print(self.chartarray)
                     DispatchQueue.main.async {
                         self.average.text = avg
                         self.rating.text = rate
@@ -167,6 +173,12 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
         }
     }
     @IBAction func showchart(_ sender: Any) {
+        let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "chart") as? ChartViewController
+        vc?.semesters = Array(semesters.dropFirst())
+        vc?.results = chartarray
+        vc!.transitioningDelegate = self
+        vc?.modalPresentationStyle = .overCurrentContext
+        present(vc!, animated: true, completion: nil)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "transcoursepop") as? TranscoursepopViewController

@@ -106,6 +106,7 @@ class Login: UIViewController,UITextFieldDelegate,UIViewControllerTransitioningD
                     self.hiddenvalid = true
                     if(String(decoding: responseData!, as: UTF8.self).contains("Welcome   to your account.")){
                         DispatchQueue.main.async { // Make sure you're on the main thread here
+                            self.pass.isSecureTextEntry = true
                             if(self.autologin.isOn){
                                 UserDefaults.standard.set(self.user.text!,forKey: "username")
                                 UserDefaults.standard.set(self.pass.text!,forKey: "password")

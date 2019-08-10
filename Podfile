@@ -10,6 +10,8 @@ target 'GJU' do
   pod 'Toast-Swift'
   pod 'TextFieldEffects'
   pod 'lottie-ios'
+  pod 'Charts'
+  pod 'ValueAnimator'
   target 'GJUTests' do
     inherit! :search_paths
     # Pods for testing
