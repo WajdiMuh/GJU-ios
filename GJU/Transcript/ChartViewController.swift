@@ -9,7 +9,7 @@
 import UIKit
 import Charts
 import ValueAnimator
-class ChartViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+class ChartViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,ChartViewDelegate {
     @IBOutlet var background: UIView!
     @IBOutlet weak var bchart: BarChartView!
     @IBOutlet weak var cv: UICollectionView!
@@ -29,6 +29,7 @@ class ChartViewController: UIViewController,UICollectionViewDataSource,UICollect
             chartDataSet.valueTextColor = UIColor.white
             chartDataSet.valueFormatter = DefaultValueFormatter(decimals: 1)
             chartDataSet.valueFont = .boldSystemFont(ofSize:(CGFloat(60 * 0.85/Double(semesters!.count))))
+            chartDataSet.highlightAlpha = 0.0
             datasets.append(chartDataSet)
         }
         let chartData = BarChartData(dataSets: datasets)
@@ -67,6 +68,13 @@ class ChartViewController: UIViewController,UICollectionViewDataSource,UICollect
         bchart.xAxis.labelCount = semesters!.count
         bchart.xAxis.valueFormatter = IndexAxisValueFormatter(values: Array(1...semesters!.count).map { String($0) })
         bchart.xAxis.granularity = 1
+        bchart.dragEnabled = false
+        bchart.pinchZoomEnabled = false
+        bchart.doubleTapToZoomEnabled = false
+        bchart.delegate = self
+    }
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight) {
+        cv.scrollToItem(at: IndexPath.init(row: highlight.dataSetIndex, section: 0), at: .centeredVertically, animated: true)
     }
     @IBAction func outtap(_ sender: Any) {
         UIView.animate(withDuration: 0.3, delay: 0.0, options: [.preferredFramesPerSecond60,.allowUserInteraction], animations: {
