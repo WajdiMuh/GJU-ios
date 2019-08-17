@@ -80,8 +80,9 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
                 DispatchQueue.main.async {
                     self.view.makeToast("No Internet Connection", duration: 1.5, position: .bottom)
                 }
-                self.navigationController?.popViewController(animated: true)
-                
+                self.dismiss(animated: true, completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
             }
         })
         

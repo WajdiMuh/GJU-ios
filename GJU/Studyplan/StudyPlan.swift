@@ -496,14 +496,15 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                 } catch {
                     print("error")
                 }
+                finished()
             }else{
                 DispatchQueue.main.async {
                     self.view.makeToast("No Internet Connection", duration: 1.5, position: .bottom)
                 }
-                self.navigationController?.popViewController(animated: true)
-                
+                self.dismiss(animated: true, completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
             }
-            finished()
         })
         
         task.resume()
@@ -529,14 +530,16 @@ class StudyPlan: UIViewController,UICollectionViewDataSource,UICollectionViewDel
                 } catch {
                     print("error")
                 }
+                finished()
             }else{
                 DispatchQueue.main.async {
                     self.view.makeToast("No Internet Connection", duration: 1.5, position: .bottom)
                 }
-                self.navigationController?.popViewController(animated: true)
+                self.dismiss(animated: true, completion: {
+                    self.navigationController?.popViewController(animated: true)
+                })
                 
             }
-            finished()
         })
         
         task.resume()

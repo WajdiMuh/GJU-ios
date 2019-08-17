@@ -166,6 +166,16 @@ class Main: UIViewController,UICollectionViewDelegate,UICollectionViewDataSource
                     self.navigationController?.pushViewController(vc!, animated: true)
                 }
             }
+        }else if(indexPath.section == 1 && indexPath.row == 4){
+            let v = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "load") as? loadingViewController
+            v?.transitioningDelegate = self
+            v?.modalPresentationStyle = .overCurrentContext
+            self.present(v!, animated: true) {
+                DispatchQueue.main.async {
+                    let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "grades") as? GradesViewController
+                    self.navigationController?.pushViewController(vc!, animated: true)
+                }
+            }
         }else if(indexPath.section == 1 && indexPath.row == 5){
             let v = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "load") as? loadingViewController
             v?.transitioningDelegate = self
