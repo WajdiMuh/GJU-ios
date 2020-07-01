@@ -9,8 +9,7 @@
 import UIKit
 import SwiftSoup
 class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICollectionViewDelegate,UICollectionViewDelegateFlowLayout,UIViewControllerTransitioningDelegate {
-    var semesters:[String] = ["Exempted Courses"]
-    var courses:[[Element]] = []
+    var semesters:[semester] = []
     var extrainfo:[[String]] = []
     var chartarray:[Double] = []
     let transition = mvcanimator()
@@ -30,14 +29,22 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
             if(error == nil){
                 do {
                     let doc: Document = try SwiftSoup.parse(String(decoding: data!, as: UTF8.self))
-                    let semesterelements:Elements = try doc.getElementsByClass("ui-datatable-header ui-widget-header ui-corner-top")
-                    for se in semesterelements{
-                        self.semesters.append(try se.text())
+                    self.semesters.append(semester(name: "Exempted Courses"))
+                    let semesterheaders:Elements = try doc.getElementsByClass("ui-datatable-header ui-widget-header ui-corner-top")
+                    for semheader in semesterheaders{
+                        self.semesters.append(semester(name: try semheader.text()))
                     }
-                    let tablesofsemester:Elements = try doc.getElementsByClass("ui-datatable-data ui-widget-content")
-                    for e in tablesofsemester{
-                        let coursesfortable:Elements = e.children()
-                        self.courses.append(coursesfortable.array())
+                    let semestertables:Slice<Elements> = try doc.getElementsByClass("ui-datatable-data ui-widget-content").dropFirst()
+                    for (index,table) in semestertables.enumerated(){
+                        for coursehtml in table.children(){
+                            let course:Course
+                            if(index == 0){
+                                course = Course(id: try coursehtml.child(0).text(), name: try coursehtml.child(1).text(), credithours: try coursehtml.child(2).text(), grade: nil, remark: try coursehtml.child(3).text())
+                            }else{
+                                  course = Course(id: try coursehtml.child(0).text(), name: try coursehtml.child(1).text(), credithours: try coursehtml.child(2).text(), grade: try coursehtml.child(3).text(), remark: try coursehtml.child(4).text())
+                            }
+                            self.semesters[index].courses.append(course)
+                        }
                     }
                     let avg:String = try ((doc.getElementsContainingOwnText("Cumulative Average :").first()?.parent()?.nextElementSibling()?.child(0).text()))!
                     let rate:String = try (doc.getElementsContainingOwnText("Rating :").first()?.parent()?.nextElementSibling()?.child(0).text())!
@@ -90,10 +97,10 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
         // Do any additional setup after loading the view.
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return courses[section].count
+        return semesters[section].courses.count
     }
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if(courses.isEmpty == true){
+        if(semesters.isEmpty == true){
             return 0
         }else{
             return semesters.count
@@ -101,31 +108,25 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "transcell", for: indexPath) as! transcriptcell
-        do {
-            if(indexPath.section == 0){
-                cell.grade.isHidden = true
-                cell.name.text = try courses[indexPath.section][indexPath.row].children().array()[1].text()
-                cell.remark.text = try courses[indexPath.section][indexPath.row].children().array()[3].text()
-            }else{
-                cell.grade.isHidden = false
-                cell.name.text = try courses[indexPath.section][indexPath.row].children().array()[1].text()
-                cell.grade.text = try courses[indexPath.section][indexPath.row].children().array()[3].text()
-                if(cell.grade.text?.isEmpty == false){
-                    cell.grade.text = cell.grade.text! + "%"
-                }
-                cell.remark.text = try courses[indexPath.section][indexPath.row].children().array()[4].text()
-                cell.remark.numberOfLines = 1
-                if((cell.remark.text?.contains("Fail"))!){
-                    cell.remark.text = "Fail"
-                }else if((cell.remark.text?.contains("Repeated"))!){
-                    cell.remark.text = "Pass Repeat"
-                    cell.remark.numberOfLines = 0
-                }
+        if(indexPath.section == 0){
+            cell.grade.isHidden = true
+            cell.name.text = semesters[indexPath.section].courses[indexPath.row].name
+            cell.remark.text = semesters[indexPath.section].courses[indexPath.row].remark
+        }else{
+            cell.grade.isHidden = false
+            cell.name.text = semesters[indexPath.section].courses[indexPath.row].name
+            cell.grade.text = semesters[indexPath.section].courses[indexPath.row].grade
+            if(cell.grade.text?.isEmpty == false && cell.grade.text != "--"){
+                cell.grade.text = cell.grade.text! + "%"
             }
-        } catch Exception.Error( let message) {
-            print(message)
-        } catch {
-            print("error")
+            cell.remark.text = semesters[indexPath.section].courses[indexPath.row].remark
+            cell.remark.numberOfLines = 1
+            if((cell.remark.text?.contains("Fail"))!){
+                cell.remark.text = "Fail"
+            }else if((cell.remark.text?.contains("Repeated"))!){
+                cell.remark.text = "Pass Repeat"
+                cell.remark.numberOfLines = 0
+            }
         }
         return cell;
     }
@@ -136,7 +137,7 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
                 return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "specialheader", for: indexPath)
             }else{
                 let sectionHeaderView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "transheader", for: indexPath) as! transcriptheader
-                sectionHeaderView.sectionname.text = semesters[indexPath.section]
+                sectionHeaderView.sectionname.text = semesters[indexPath.section].name
                 return sectionHeaderView
             }
         }else{
@@ -180,7 +181,11 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
     }
     @IBAction func showchart(_ sender: Any) {
         let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "chart") as? ChartViewController
-        vc?.semesters = Array(semesters.dropFirst())
+        var semesternames:[String] = []
+        for i in (1...self.semesters.count-1){
+            semesternames.append(semesters[i].name!)
+        }
+        vc?.semesters = semesternames
         vc?.results = chartarray
         vc!.transitioningDelegate = self
         vc?.modalPresentationStyle = .overCurrentContext
@@ -188,7 +193,7 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = UIStoryboard.init(name: "Main", bundle: Bundle.main).instantiateViewController(withIdentifier: "transcoursepop") as? TranscoursepopViewController
-        vc?.courseinfo = courses[indexPath.section][indexPath.row].children()
+        vc?.courseinfo = semesters[indexPath.section].courses[indexPath.row]
         vc!.transitioningDelegate = self
         vc?.modalPresentationStyle = .overCurrentContext
         present(vc!, animated: true, completion: nil)
@@ -214,5 +219,4 @@ class TranscriptViewController: UIViewController,UICollectionViewDataSource,UICo
         // Pass the selected object to the new view controller.
     }
     */
-
 }

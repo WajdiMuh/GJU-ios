@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D07A54C24ACE070000B2C13 /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D07A54B24ACE070000B2C13 /* Section.swift */; };
 		0D15826D22CAA07B00C7F887 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D15826C22CAA07B00C7F887 /* Main.swift */; };
 		0D30F8A922F4617000469001 /* transcriptheader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30F8A822F4617000469001 /* transcriptheader.swift */; };
 		0D30F8AB22F4618600469001 /* transcriptfooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30F8AA22F4618600469001 /* transcriptfooter.swift */; };
 		0D30F8AD22F4619D00469001 /* transcriptcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D30F8AC22F4619D00469001 /* transcriptcell.swift */; };
 		0D60FD2922FE46A400234F01 /* TranscoursepopViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D781A1122FA11B300A0B9F0 /* TranscoursepopViewController.swift */; };
-		0D8A77ED22D8F97B0069F298 /* infocell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D8A77EC22D8F97B0069F298 /* infocell.swift */; };
 		0D8C640822CD827400C65F3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0D8C640722CD827400C65F3E /* Assets.xcassets */; };
 		0D93A34522D195F00016A2B6 /* mainsection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D93A34422D195F00016A2B6 /* mainsection.swift */; };
 		0D93A34722D197DC0016A2B6 /* subsection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D93A34622D197DC0016A2B6 /* subsection.swift */; };
@@ -45,6 +45,8 @@
 		0DDCD38D22ECBC8100477433 /* loadingpopanimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DDCD38C22ECBC8100477433 /* loadingpopanimator.swift */; };
 		0DEFA21322FE435E006B9363 /* ChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEFA21222FE435E006B9363 /* ChartViewController.swift */; };
 		0DF345E322E1BE8D002DE703 /* Sectioncontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF345E222E1BE8D002DE703 /* Sectioncontroller.swift */; };
+		0DF728BA24AC72190041A3BD /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF728B924AC72190041A3BD /* Course.swift */; };
+		0DF728BD24AC7D070041A3BD /* semester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF728BC24AC7D070041A3BD /* semester.swift */; };
 		0DFB3FF222DF4E5000CC0C6D /* scrollind.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DFB3FF122DF4E5000CC0C6D /* scrollind.json */; };
 		0DFF95F822ECA5A000684FF4 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DFF95F722ECA5A000684FF4 /* loading.json */; };
 		0DFF95FA22ECA5AC00684FF4 /* intro.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DFF95F922ECA5AB00684FF4 /* intro.json */; };
@@ -72,12 +74,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0D07A54B24ACE070000B2C13 /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		0D15826C22CAA07B00C7F887 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		0D30F8A822F4617000469001 /* transcriptheader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = transcriptheader.swift; sourceTree = "<group>"; };
 		0D30F8AA22F4618600469001 /* transcriptfooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = transcriptfooter.swift; sourceTree = "<group>"; };
 		0D30F8AC22F4619D00469001 /* transcriptcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = transcriptcell.swift; sourceTree = "<group>"; };
 		0D781A1122FA11B300A0B9F0 /* TranscoursepopViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranscoursepopViewController.swift; sourceTree = "<group>"; };
-		0D8A77EC22D8F97B0069F298 /* infocell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = infocell.swift; sourceTree = "<group>"; };
 		0D8C640722CD827400C65F3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0D93A34422D195F00016A2B6 /* mainsection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mainsection.swift; sourceTree = "<group>"; };
 		0D93A34622D197DC0016A2B6 /* subsection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = subsection.swift; sourceTree = "<group>"; };
@@ -116,6 +118,8 @@
 		0DDCD38C22ECBC8100477433 /* loadingpopanimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loadingpopanimator.swift; sourceTree = "<group>"; };
 		0DEFA21222FE435E006B9363 /* ChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartViewController.swift; sourceTree = "<group>"; };
 		0DF345E222E1BE8D002DE703 /* Sectioncontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sectioncontroller.swift; sourceTree = "<group>"; };
+		0DF728B924AC72190041A3BD /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		0DF728BC24AC7D070041A3BD /* semester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = semester.swift; sourceTree = "<group>"; };
 		0DFB3FF122DF4E5000CC0C6D /* scrollind.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = scrollind.json; sourceTree = "<group>"; };
 		0DFF95F722ECA5A000684FF4 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
 		0DFF95F922ECA5AB00684FF4 /* intro.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = intro.json; sourceTree = "<group>"; };
@@ -185,8 +189,9 @@
 			isa = PBXGroup;
 			children = (
 				0D95256322CA3ED700A8585C /* AppDelegate.swift */,
-				0D95256522CA3ED700A8585C /* Login.swift */,
 				0DEFA21422FE449B006B9363 /* Main */,
+				0DF728BB24AC727B0041A3BD /* Login */,
+				0DF728B924AC72190041A3BD /* Course.swift */,
 				0DEFA21522FE44C3006B9363 /* Studyplan */,
 				0DA8479D22CEC6F600CBAF5E /* gjub.swift */,
 				0D96554422DAEA01006E2396 /* mvcanimator.swift */,
@@ -267,12 +272,12 @@
 		0DEFA21522FE44C3006B9363 /* Studyplan */ = {
 			isa = PBXGroup;
 			children = (
+				0D07A54B24ACE070000B2C13 /* Section.swift */,
 				0DA56D1C22CAE151003ACD2A /* StudyPlan.swift */,
 				0DA56D2022CAEB29003ACD2A /* titleofcourses.swift */,
 				0DA56D1E22CAEA8B003ACD2A /* course.swift */,
 				0DD0D82A22CC329800207659 /* Coursecontroller.swift */,
 				0DF345E222E1BE8D002DE703 /* Sectioncontroller.swift */,
-				0D8A77EC22D8F97B0069F298 /* infocell.swift */,
 			);
 			path = Studyplan;
 			sourceTree = "<group>";
@@ -299,8 +304,17 @@
 				0D781A1122FA11B300A0B9F0 /* TranscoursepopViewController.swift */,
 				0DEFA21222FE435E006B9363 /* ChartViewController.swift */,
 				0DB07C2B22FF18C7009FFA35 /* chartinfocell.swift */,
+				0DF728BC24AC7D070041A3BD /* semester.swift */,
 			);
 			path = Transcript;
+			sourceTree = "<group>";
+		};
+		0DF728BB24AC727B0041A3BD /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				0D95256522CA3ED700A8585C /* Login.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		3D5871064B0C00F444C01B3C /* Frameworks */ = {
@@ -544,6 +558,7 @@
 				0D60FD2922FE46A400234F01 /* TranscoursepopViewController.swift in Sources */,
 				0DA56D2122CAEB29003ACD2A /* titleofcourses.swift in Sources */,
 				0DD0D82B22CC329800207659 /* Coursecontroller.swift in Sources */,
+				0DF728BD24AC7D070041A3BD /* semester.swift in Sources */,
 				0DA55CA122F58F7200E86DC9 /* specialtransfootercode.swift in Sources */,
 				0D15826D22CAA07B00C7F887 /* Main.swift in Sources */,
 				0DDCD38D22ECBC8100477433 /* loadingpopanimator.swift in Sources */,
@@ -551,6 +566,7 @@
 				0DA8479922CEC5DB00CBAF5E /* SimpleButtonControlState.swift in Sources */,
 				0DA8479322CEC44D00CBAF5E /* SimpleButton.swift in Sources */,
 				0DCF49BF23022BAD00D66933 /* GradesViewController.swift in Sources */,
+				0D07A54C24ACE070000B2C13 /* Section.swift in Sources */,
 				0D30F8A922F4617000469001 /* transcriptheader.swift in Sources */,
 				0DA8479722CEC4DE00CBAF5E /* SimpleButtonStateChangeValue.swift in Sources */,
 				0D95256622CA3ED700A8585C /* Login.swift in Sources */,
@@ -562,9 +578,9 @@
 				0DEFA21322FE435E006B9363 /* ChartViewController.swift in Sources */,
 				0DBE6DDD2306272B00C7E853 /* gradescell.swift in Sources */,
 				0D95256422CA3ED700A8585C /* AppDelegate.swift in Sources */,
-				0D8A77ED22D8F97B0069F298 /* infocell.swift in Sources */,
 				0D96554522DAEA01006E2396 /* mvcanimator.swift in Sources */,
 				0DF345E322E1BE8D002DE703 /* Sectioncontroller.swift in Sources */,
+				0DF728BA24AC72190041A3BD /* Course.swift in Sources */,
 				0D30F8AB22F4618600469001 /* transcriptfooter.swift in Sources */,
 				0DAA46802308A6E40059DF1E /* gradesfooter.swift in Sources */,
 				0DBE6DD9230612D900C7E853 /* nomenutextfield.swift in Sources */,

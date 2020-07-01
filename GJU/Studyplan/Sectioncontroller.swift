@@ -9,7 +9,7 @@
 import UIKit
 
 class Sectioncontroller: UIViewController {
-    var info:[String]? = nil
+    var info:Section? = nil
     @IBOutlet weak var sectionname: UILabel!
     @IBOutlet weak var stch: UILabel!
     @IBOutlet weak var srch: UILabel!
@@ -17,10 +17,10 @@ class Sectioncontroller: UIViewController {
     @IBOutlet var background: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        sectionname.text = info![0]
-        stch.text = info![1]
-        srch.text = info![2]
-        sph.text = info![3]
+        sectionname.text = info?.name
+        stch.text = info?.sectiontotalcredithours
+        srch.text = info?.sectionrequiredcredithours
+        sph.text = info?.sectionpassedcredithours
         // Do any additional setup after loading the view.
     }
     @IBAction func outtap(_ sender: Any) {

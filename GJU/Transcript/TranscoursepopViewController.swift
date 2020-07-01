@@ -11,7 +11,7 @@ import SwiftSoup
 import QuartzCore
 
 class TranscoursepopViewController: UIViewController {
-    var courseinfo:Elements? = nil
+    var courseinfo:Course? = nil
     @IBOutlet var background: UIView!
     @IBOutlet weak var cname: UILabel!
     @IBOutlet weak var cid: UILabel!
@@ -21,27 +21,20 @@ class TranscoursepopViewController: UIViewController {
     @IBOutlet weak var gradelabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-        do {
-            cid.text = try courseinfo?.array()[0].text()
-            cname.text = try courseinfo?.array()[1].text()
-            ch.text = try courseinfo?.array()[2].text()
-            if(courseinfo!.count < 5){
+            cid.text = courseinfo?.id
+            cname.text = courseinfo?.name
+            ch.text = courseinfo?.credithours
+            remark.text = courseinfo?.remark
+            if(courseinfo!.grade == nil){
                 grade.isHidden = true
                 gradelabel.isHidden = true
-                remark.text = try courseinfo?.array()[3].text()
             }else{
-                grade.text = try courseinfo?.array()[3].text()
+                grade.text = courseinfo?.grade
                 if(grade.text?.isEmpty == true){
                     grade.isHidden = true
                     gradelabel.isHidden = true
                 }
-                remark.text = try courseinfo?.array()[4].text()
             }
-        } catch Exception.Error( let message) {
-            print(message)
-        } catch {
-            print("error")
-        }
         // Do any additional setup after loading the view.
     }
     @IBAction func outtap(_ sender: Any) {
